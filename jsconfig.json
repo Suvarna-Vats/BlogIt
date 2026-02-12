@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./app/javascript",
+    "paths": {
+      "src/*": ["src/*"],
+      "apis/*": ["src/apis/*"],
+      "common/*": ["src/common/*"],
+      "components/*": ["src/components/*"]
+    }
+  },
+  "include": ["app/javascript/**/*"]
+}
