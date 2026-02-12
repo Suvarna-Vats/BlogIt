@@ -55,3 +55,5 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
 end
+
+gem "ruby-lsp", "~> 0.26.6", group: :development
