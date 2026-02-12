@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 
+import { HamburgerMenu } from "@bigbinary/neeto-icons";
 import { Button, Typography } from "@bigbinary/neetoui";
 import classNames from "classnames";
 import { NavLink } from "react-router-dom";
@@ -32,7 +33,7 @@ const Sidebar = ({ items = DEFAULT_ITEMS }) => {
         <Button
           aria-label={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
           className="grid h-10 w-10 place-items-center rounded-md text-gray-700 hover:bg-gray-100"
-          icon={<i className="ri-menu-line text-xl" />}
+          icon={HamburgerMenu}
           style="text"
           onClick={() => setIsExpanded(prev => !prev)}
         />
