@@ -3,7 +3,7 @@ import React from "react";
 import { Typography } from "@bigbinary/neetoui";
 
 const Card = ({ post }) => {
-  const { date, excerpt, title } = post;
+  const { description, downvotes, title, upvotes } = post;
 
   return (
     <article className="py-6">
@@ -15,11 +15,16 @@ const Card = ({ post }) => {
         component="p"
         style="body2"
       >
-        {excerpt}
+        {description}
       </Typography>
-      <Typography className="mt-2 text-gray-500" component="p" style="nano">
-        {date}
-      </Typography>
+      <div className="mt-3 flex gap-4">
+        <Typography className="text-gray-600" component="p" style="nano">
+          Upvotes: {upvotes}
+        </Typography>
+        <Typography className="text-gray-600" component="p" style="nano">
+          Downvotes: {downvotes}
+        </Typography>
+      </div>
     </article>
   );
 };
