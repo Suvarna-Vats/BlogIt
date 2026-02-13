@@ -53,6 +53,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "erb_lint", require: false, git: "https://github.com/Shopify/erb-lint.git", branch: "main"
+  gem "ruby-lsp"
   gem "web-console"
 end
 
@@ -62,6 +63,6 @@ end
 
 gem "connection_pool", "~> 2.4"
 gem "react-rails", "~> 2.7.1"
-gem "ruby-lsp", "~> 0.26.6", group: :development
+gem "solargraph", group: :development
 gem "sprockets"
 gem "sprockets-rails"
