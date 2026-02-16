@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import { Button, Spinner, Typography } from "@bigbinary/neetoui";
 import { useHistory } from "react-router-dom";
 import { fetchPosts } from "src/apis/posts";
+import { useCategoryContext } from "src/contexts/category";
 
 import Layout from "./Layout";
 import Posts from "./Posts";
 
 const Blog = () => {
   const history = useHistory();
+  const { selectedCategoryId } = useCategoryContext();
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -16,7 +18,9 @@ const Blog = () => {
     const loadPosts = async () => {
       setIsLoading(true);
       try {
-        const response = await fetchPosts();
+        const response = await fetchPosts(
+          selectedCategoryId ? { category_id: selectedCategoryId } : {}
+        );
         setPosts(response?.data?.posts || []);
       } catch {
         setPosts([]);
@@ -26,7 +30,7 @@ const Blog = () => {
     };
 
     loadPosts();
-  }, []);
+  }, [selectedCategoryId]);
 
   const handleAddNew = () => history.push("/blogs/new");
 

@@ -7,9 +7,22 @@ class CategoriesController < ApplicationController
     render_json({ categories: @categories.as_json(only: %i[id name]) })
   end
 
+  def create
+    category = Category.new(category_params)
+    if category.save
+      render_notice(t("successfully_created"), :created)
+    else
+      render_error(category.errors.full_messages.to_sentence, :unprocessable_entity)
+    end
+  end
+
   private
 
     def load_categories
       @categories = Category.order(:name)
+    end
+
+    def category_params
+      params.require(:category).permit(:name)
     end
 end

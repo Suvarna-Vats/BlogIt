@@ -2,4 +2,9 @@ import axios from "axios";
 
 const fetchCategories = async () => axios.get("/categories");
 
-export { fetchCategories };
+const createCategory = async payload =>
+  axios.post("/categories", {
+    category: payload,
+  });
+
+export { createCategory, fetchCategories };

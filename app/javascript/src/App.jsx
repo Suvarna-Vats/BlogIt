@@ -10,19 +10,22 @@ import {
   BrowserRouter as Router,
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { CategoryProvider } from "src/contexts/category";
 
 const App = () => (
-  <Router>
-    <ToastContainer />
-    <Switch>
-      <Route exact path="/">
-        <Redirect to="/blogs" />
-      </Route>
-      <Route exact component={Blog} path="/blogs" />
-      <Route exact component={NewBlogPost} path="/blogs/new" />
-      <Route exact component={ShowBlogPost} path="/blogs/:slug" />
-    </Switch>
-  </Router>
+  <CategoryProvider>
+    <Router>
+      <ToastContainer />
+      <Switch>
+        <Route exact path="/">
+          <Redirect to="/blogs" />
+        </Route>
+        <Route exact component={Blog} path="/blogs" />
+        <Route exact component={NewBlogPost} path="/blogs/new" />
+        <Route exact component={ShowBlogPost} path="/blogs/:slug" />
+      </Switch>
+    </Router>
+  </CategoryProvider>
 );
 
 export default App;

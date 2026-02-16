@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const fetchPosts = async () => axios.get("/posts");
+const fetchPosts = async (params = {}) => axios.get("/posts", { params });
 const fetchPost = async slug => axios.get(`/posts/${slug}`);
 
 const createPost = async payload =>

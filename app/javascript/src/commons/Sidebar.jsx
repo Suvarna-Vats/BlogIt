@@ -3,9 +3,9 @@ import React, { useMemo, useState } from "react";
 import { HamburgerMenu } from "@bigbinary/neeto-icons";
 import { Button, Typography } from "@bigbinary/neetoui";
 import classNames from "classnames";
-import { NavLink } from "react-router-dom";
 
 import { DEFAULT_ITEMS } from "./constants";
+import NavItem from "./NavItem";
 
 const Sidebar = ({ items = DEFAULT_ITEMS }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -53,35 +53,9 @@ const Sidebar = ({ items = DEFAULT_ITEMS }) => {
           isExpanded ? "space-y-1" : "space-y-2"
         )}
       >
-        {navItems.map(item => {
-          const { icon, label, to } = item;
-
-          return (
-            <NavLink
-              exact
-              activeClassName="bg-gray-100 text-gray-900"
-              key={to}
-              title={label}
-              to={to}
-              className={classNames(
-                "group flex items-center gap-3 rounded-md px-2 py-2 text-gray-700 hover:bg-gray-100",
-                !isExpanded && "justify-center"
-              )}
-            >
-              <i className={classNames(icon, "text-xl")} />
-              {isExpanded && (
-                <Typography
-                  className="truncate"
-                  component="span"
-                  style="body2"
-                  weight="medium"
-                >
-                  {label}
-                </Typography>
-              )}
-            </NavLink>
-          );
-        })}
+        {navItems.map(item => (
+          <NavItem isExpanded={isExpanded} item={item} key={item.label} />
+        ))}
       </nav>
     </aside>
   );

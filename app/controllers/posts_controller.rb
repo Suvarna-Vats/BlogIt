@@ -35,5 +35,12 @@ class PostsController < ApplicationController
 
     def load_posts
       @posts = Post.includes(:user, :organization, :categories).order(created_at: :desc)
+
+      return if params[:category_id].blank?
+
+      @posts = @posts
+        .joins(:categories)
+        .where(categories: { id: params[:category_id] })
+        .distinct
     end
 end
