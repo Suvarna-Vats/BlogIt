@@ -38,6 +38,7 @@ const Blog = () => {
             Blog posts
           </Typography>
           <Button
+            className="cursor-pointer bg-black"
             label="Add new blog post"
             size="small"
             onClick={handleAddNew}

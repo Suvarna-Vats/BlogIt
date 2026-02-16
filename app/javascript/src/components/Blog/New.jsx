@@ -86,6 +86,7 @@ const New = () => {
                 onClick={() => history.push("/blogs")}
               />
               <Button
+                className="cursor-pointer bg-black"
                 disabled={!canSubmit}
                 label={isSubmitting ? "Submitting..." : "Submit"}
                 loading={isSubmitting}
