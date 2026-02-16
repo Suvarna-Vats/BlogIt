@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
+  before_action :load_posts, only: [ :index ]
+
   def index
-    posts = Post.order(created_at: :desc)
-    render_json({ posts: })
+    render
   end
 
   def show
@@ -24,5 +25,9 @@ class PostsController < ApplicationController
 
     def post_params
       params.require(:post).permit(:title, :description)
+    end
+
+    def load_posts
+      @posts = Post.includes(:user, :organization, :categories).order(created_at: :desc)
     end
 end

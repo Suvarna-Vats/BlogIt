@@ -1,3 +1,5 @@
+import { __, gt, identity, ifElse, length, pipe, slice, trim } from "ramda";
+
 const formatPostDate = createdAt => {
   if (!createdAt) return null;
   const parsed = new Date(createdAt);
@@ -10,4 +12,11 @@ const formatPostDate = createdAt => {
   }).format(parsed);
 };
 
-export { formatPostDate };
+const truncate = (value = "", maxLength = 220) =>
+  ifElse(
+    pipe(length, gt(__, maxLength)),
+    pipe(slice(0, maxLength), trim, truncated => `${truncated}…`),
+    identity
+  )(value);
+
+export { formatPostDate, truncate };
