@@ -1,4 +1,5 @@
 en:
+  successfully_created: "Successfully created!"
   post:
     slug:
       immutable: "is immutable!"

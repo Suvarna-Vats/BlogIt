@@ -5,9 +5,7 @@ import { Button, Typography } from "@bigbinary/neetoui";
 import classNames from "classnames";
 import { NavLink } from "react-router-dom";
 
-const DEFAULT_ITEMS = [
-  { label: "Blog posts", to: "/blogs", icon: "ri-file-list-2-line" },
-];
+import { DEFAULT_ITEMS } from "./constants";
 
 const Sidebar = ({ items = DEFAULT_ITEMS }) => {
   const [isExpanded, setIsExpanded] = useState(false);

@@ -1,9 +1,11 @@
 import axios from "axios";
 
-// axios doesn't ship with `fetch`; alias it for convenience.
-axios.fetch = axios.fetch || axios.get;
+const fetchPosts = async () => axios.get("/posts");
+const fetchPost = async slug => axios.get(`/posts/${slug}`);
 
-const fetchPosts = async () => axios.fetch("/posts");
+const createPost = async payload =>
+  axios.post("/posts", {
+    post: payload,
+  });
 
-export { fetchPosts };
-
+export { createPost, fetchPost, fetchPosts };

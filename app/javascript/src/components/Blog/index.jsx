@@ -1,55 +1,57 @@
 import React, { useEffect, useState } from "react";
 
-import { Typography } from "@bigbinary/neetoui";
+import { Button, Spinner, Typography } from "@bigbinary/neetoui";
+import { useHistory } from "react-router-dom";
 import { fetchPosts } from "src/apis/posts";
-import Sidebar from "src/commons/Sidebar";
 
-import Card from "./Card";
+import Layout from "./Layout";
+import Posts from "./Posts";
 
 const Blog = () => {
+  const history = useHistory();
   const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadPosts = async () => {
+      setIsLoading(true);
       try {
         const response = await fetchPosts();
         setPosts(response?.data?.posts || []);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error);
+      } catch {
+        setPosts([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     loadPosts();
   }, []);
 
+  const handleAddNew = () => history.push("/blogs/new");
+
   return (
-    <div className="min-h-screen bg-white">
-      <div className="flex">
-        <Sidebar
-          items={[
-            { label: "Blog posts", to: "/blogs", icon: "ri-file-list-2-line" },
-          ]}
-        />
-        <main className="flex-1 px-10 py-12">
-          <div className="mx-auto w-full max-w-5xl">
-            <Typography
-              className="mb-10"
-              component="h1"
-              style="h1"
-              weight="bold"
-            >
-              Blog posts
-            </Typography>
-            <div className="divide-y divide-gray-200">
-              {posts.map(post => (
-                <Card key={post.id} {...{ post }} />
-              ))}
-            </div>
+    <Layout>
+      <div className="mx-auto w-full max-w-5xl">
+        <div className="mb-10 flex flex-wrap items-center justify-between gap-4">
+          <Typography component="h1" style="h1" weight="bold">
+            Blog posts
+          </Typography>
+          <Button
+            label="Add new blog post"
+            size="small"
+            onClick={handleAddNew}
+          />
+        </div>
+        {isLoading ? (
+          <div className="grid place-items-center py-24">
+            <Spinner />
           </div>
-        </main>
+        ) : (
+          <Posts posts={posts} onAddNew={handleAddNew} />
+        )}
       </div>
-    </div>
+    </Layout>
   );
 };
 
