@@ -12,9 +12,14 @@ class Post < ApplicationRecord
   validates_inclusion_of :is_bloggable, in: [ true, false ]
   validates :slug, uniqueness: true
   validate :slug_not_changed
+  before_validation :set_organization_id
   before_create :set_slug
 
   private
+
+    def set_organization_id
+      self.organization_id ||= user&.organization_id
+    end
 
     def set_slug
       title_slug = title.parameterize

@@ -1,8 +1,16 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { Left } from "@bigbinary/neeto-icons";
-import { Button, Input, Textarea, Typography } from "@bigbinary/neetoui";
+import {
+  Button,
+  Input,
+  Select,
+  Textarea,
+  Typography,
+} from "@bigbinary/neetoui";
+import { is } from "ramda";
 import { useHistory } from "react-router-dom";
+import { fetchCategories } from "src/apis/categories";
 import { createPost } from "src/apis/posts";
 
 import { MAX_TITLE_LENGTH, MAX_DESCRIPTION_LENGTH } from "./constants";
@@ -12,13 +20,51 @@ const New = () => {
   const history = useHistory();
 
   const [title, setTitle] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(true);
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const handleCategoriesChange = value => {
+    if (!value) {
+      setSelectedCategories([]);
+
+      return;
+    }
+
+    setSelectedCategories(is(Array, value) ? value : [value]);
+  };
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      setIsLoadingCategories(true);
+      try {
+        const response = await fetchCategories();
+        const categories = response?.data?.categories ?? [];
+        setCategoryOptions(
+          categories.map(category => ({
+            label: category.name,
+            value: category.id,
+          }))
+        );
+      } catch {
+        setCategoryOptions([]);
+      } finally {
+        setIsLoadingCategories(false);
+      }
+    };
+
+    loadCategories();
+  }, []);
+
   const canSubmit = useMemo(
     () =>
-      title.trim().length > 0 && description.trim().length > 0 && !isSubmitting,
-    [description, isSubmitting, title]
+      title.trim().length > 0 &&
+      description.trim().length > 0 &&
+      selectedCategories.length > 0 &&
+      !isSubmitting,
+    [description, isSubmitting, selectedCategories.length, title]
   );
 
   const handleSubmit = async event => {
@@ -31,6 +77,8 @@ const New = () => {
       await createPost({
         title: title.trim(),
         description: description.trim(),
+        user_id: 2,
+        category_ids: selectedCategories.map(({ value }) => value),
       });
 
       history.push("/blogs");
@@ -62,6 +110,20 @@ const New = () => {
               placeholder="Enter title"
               value={title}
               onChange={event => setTitle(event.target.value)}
+            />
+            <Select
+              isMulti
+              isSearchable
+              required
+              label="Categories"
+              options={categoryOptions}
+              value={selectedCategories}
+              placeholder={
+                isLoadingCategories
+                  ? "Loading categories..."
+                  : "Search category"
+              }
+              onChange={handleCategoriesChange}
             />
             <div>
               <Textarea
