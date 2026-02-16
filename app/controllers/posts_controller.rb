@@ -8,8 +8,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    post = Post.find_by!(slug: params[:slug])
-    render_json({ post: })
+    @post = Post.includes(:user, :organization, :categories).find_by!(slug: params[:slug])
   end
 
   def create
