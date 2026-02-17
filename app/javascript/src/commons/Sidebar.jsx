@@ -1,16 +1,49 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { HamburgerMenu } from "@bigbinary/neeto-icons";
 import { Button, Typography } from "@bigbinary/neetoui";
 import classNames from "classnames";
+import { useHistory } from "react-router-dom";
+import { setAuthHeaders } from "src/apis/axios";
+import { destroySession } from "src/apis/sessions";
+import { getLoggedInUserName } from "utils/auth";
+import { setToLocalStorage } from "utils/storage";
 
 import { DEFAULT_ITEMS } from "./constants";
 import NavItem from "./NavItem";
+import User from "./User";
 
 const Sidebar = ({ items = DEFAULT_ITEMS }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const history = useHistory();
 
   const navItems = useMemo(() => items ?? DEFAULT_ITEMS, [items]);
+  const [userName, setUserName] = useState(() => getLoggedInUserName());
+
+  useEffect(() => {
+    const syncUserName = () => setUserName(getLoggedInUserName());
+    syncUserName();
+
+    window.addEventListener("storage", syncUserName);
+
+    return () => window.removeEventListener("storage", syncUserName);
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await destroySession();
+    } finally {
+      setToLocalStorage({
+        authToken: null,
+        email: null,
+        userId: null,
+        userName: null,
+      });
+      setUserName(null);
+      setAuthHeaders();
+      history.push("/login");
+    }
+  };
 
   return (
     <aside
@@ -57,6 +90,18 @@ const Sidebar = ({ items = DEFAULT_ITEMS }) => {
           <NavItem isExpanded={isExpanded} item={item} key={item.label} />
         ))}
       </nav>
+      <div
+        className={classNames(
+          "border-t px-3 py-4",
+          isExpanded ? "flex items-center" : "flex justify-center"
+        )}
+      >
+        <User
+          isExpanded={isExpanded}
+          userName={userName}
+          onLogout={handleLogout}
+        />
+      </div>
     </aside>
   );
 };

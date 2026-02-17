@@ -12,7 +12,9 @@ class PostsController < ApplicationController
   end
 
   def create
-    post = Post.new(post_params)
+    post = current_user.posts.new(post_params)
+    post.organization = current_user.organization
+
     if post.save
       render_notice(t("successfully_created"), :created)
     else
@@ -26,14 +28,18 @@ class PostsController < ApplicationController
       params.require(:post).permit(
         :title,
         :description,
-        :user_id,
-        :organization_id,
         category_ids: []
       )
     end
 
     def load_posts
-      @posts = Post.includes(:user, :organization, :categories).order(created_at: :desc)
+      current_org_id = current_user.organization_id
+      @posts = Post
+        .includes(:user, :organization, :categories)
+        .joins(:user)
+        .where(organization_id: current_org_id)
+        .where(users: { organization_id: current_org_id })
+        .order(created_at: :desc)
 
       return if params[:category_id].blank?
 

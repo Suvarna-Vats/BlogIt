@@ -1,5 +1,9 @@
 en:
   successfully_created: "Successfully created!"
+  session:
+    incorrect_credentials: "Incorrect credentials, try again."
+    could_not_authenticate: "Could not authenticate with the provided credentials."
+    logged_out: "Logged out successfully."
   post:
     slug:
       immutable: "is immutable!"

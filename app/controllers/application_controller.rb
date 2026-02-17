@@ -2,6 +2,9 @@
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  before_action :authenticate_user_using_x_auth_token, if: :json_request?
+
+  helper_method :current_user
 
   def errors_to_sentence
     errors.full_messages.to_sentence
@@ -65,4 +68,33 @@ class ApplicationController < ActionController::Base
   def render_json(json = {}, status = :ok)
     render status:, json:
   end
+
+  private
+
+    def json_request?
+      request.format.json?
+    end
+
+    def authenticate_user_using_x_auth_token
+      email = request.headers["X-Auth-Email"].presence
+      token = request.headers["X-Auth-Token"].presence
+      user = email && User.find_by(email:)
+
+      if user.present? && token_matches?(user.authentication_token, token)
+        @current_user = user
+      else
+        render_error(t("session.could_not_authenticate"), :unauthorized) and return
+      end
+    end
+
+    def token_matches?(stored_token, request_token)
+      stored_token.present? &&
+        request_token.present? &&
+        stored_token.bytesize == request_token.bytesize &&
+        ActiveSupport::SecurityUtils.secure_compare(stored_token, request_token)
+    end
+
+    def current_user
+      @current_user
+    end
 end

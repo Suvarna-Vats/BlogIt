@@ -1,8 +1,10 @@
 import React from "react";
 
+import { Login } from "components/Authentication";
 import Blog from "components/Blog";
 import NewBlogPost from "components/Blog/New";
 import ShowBlogPost from "components/Blog/Show";
+import { PrivateRoute } from "components/commons";
 import {
   Redirect,
   Route,
@@ -11,6 +13,7 @@ import {
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { CategoryProvider } from "src/contexts/category";
+import { isLoggedIn } from "utils/auth";
 
 const App = () => (
   <CategoryProvider>
@@ -18,11 +21,12 @@ const App = () => (
       <ToastContainer />
       <Switch>
         <Route exact path="/">
-          <Redirect to="/blogs" />
+          <Redirect to={isLoggedIn() ? "/blogs" : "/login"} />
         </Route>
-        <Route exact component={Blog} path="/blogs" />
-        <Route exact component={NewBlogPost} path="/blogs/new" />
-        <Route exact component={ShowBlogPost} path="/blogs/:slug" />
+        <Route exact component={Login} path="/login" />
+        <PrivateRoute exact component={Blog} path="/blogs" />
+        <PrivateRoute exact component={NewBlogPost} path="/blogs/new" />
+        <PrivateRoute exact component={ShowBlogPost} path="/blogs/:slug" />
       </Switch>
     </Router>
   </CategoryProvider>

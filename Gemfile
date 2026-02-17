@@ -48,6 +48,7 @@ group :development, :test do
 
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
+  gem "minitest", "~> 5.25"
 end
 
 group :development do

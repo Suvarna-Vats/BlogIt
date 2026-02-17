@@ -77,7 +77,6 @@ const New = () => {
       await createPost({
         title: title.trim(),
         description: description.trim(),
-        user_id: 2,
         category_ids: selectedCategories.map(({ value }) => value),
       });
 
