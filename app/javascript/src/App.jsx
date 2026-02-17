@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Login } from "components/Authentication";
+import { Login, SignUp } from "components/Authentication";
 import Blog from "components/Blog";
 import NewBlogPost from "components/Blog/New";
 import ShowBlogPost from "components/Blog/Show";
@@ -24,6 +24,7 @@ const App = () => (
           <Redirect to={isLoggedIn() ? "/blogs" : "/login"} />
         </Route>
         <Route exact component={Login} path="/login" />
+        <Route exact component={SignUp} path="/signup" />
         <PrivateRoute exact component={Blog} path="/blogs" />
         <PrivateRoute exact component={NewBlogPost} path="/blogs/new" />
         <PrivateRoute exact component={ShowBlogPost} path="/blogs/:slug" />

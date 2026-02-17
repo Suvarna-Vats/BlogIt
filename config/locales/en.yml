@@ -1,5 +1,7 @@
 en:
   successfully_created: "Successfully created!"
+  user:
+    signed_up: "Account created successfully. Please sign in."
   session:
     incorrect_credentials: "Incorrect credentials, try again."
     could_not_authenticate: "Could not authenticate with the provided credentials."

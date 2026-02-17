@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   constraints(lambda { |req| req.format == :json }) do
     resources :posts, only: [ :index, :show, :create ], param: :slug
     resources :categories, only: [ :index, :create ]
+    resources :users, only: [ :create ]
     resource :session, only: [ :create, :destroy ]
   end
   root "home#index"

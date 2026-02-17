@@ -1,35 +1,26 @@
 import React, { useCallback } from "react";
 
-import { Button, Typography } from "@bigbinary/neetoui";
-import { useHistory, Redirect } from "react-router-dom";
-import { setAuthHeaders } from "src/apis/axios";
-import { createSession } from "src/apis/sessions";
+import { Typography, Button } from "@bigbinary/neetoui";
+import { Redirect, useHistory } from "react-router-dom";
+import { createUser } from "src/apis/users";
 import { isLoggedIn } from "utils/auth";
-import { setToLocalStorage } from "utils/storage";
 
-import { LoginForm } from "./Form";
+import { SignUpForm } from "./Form";
 
-const Login = () => {
+const SignUp = () => {
   const history = useHistory();
 
   const handleSubmit = useCallback(
     async values => {
       const payload = {
+        name: values.name?.trim(),
         email: values.email?.trim(),
         password: values.password,
+        password_confirmation: values.passwordConfirmation,
       };
 
-      const response = await createSession(payload);
-      const { authentication_token, email, id, name } = response?.data ?? {};
-
-      setToLocalStorage({
-        authToken: authentication_token,
-        email,
-        userId: id,
-        userName: name,
-      });
-      setAuthHeaders();
-      history.push("/blogs");
+      await createUser(payload);
+      history.push("/login");
     },
     [history]
   );
@@ -40,20 +31,20 @@ const Login = () => {
     <div className="min-h-screen bg-gray-50 px-4 py-16">
       <div className="mx-auto w-full max-w-md rounded-lg border border-gray-200 bg-white p-8">
         <Typography component="h1" style="h2" weight="bold">
-          Sign in
+          Sign up
         </Typography>
         <Typography className="mt-2 text-gray-600" style="body2">
-          Welcome back. Please enter your credentials to continue.
+          Create your account to start blogging.
         </Typography>
-        <LoginForm onSubmit={handleSubmit} />
+        <SignUpForm onSubmit={handleSubmit} />
         <div className="mt-6 flex items-center justify-center gap-2">
           <Typography className="text-gray-600" style="body3">
-            New here?
+            Already have an account?
           </Typography>
           <Button
-            label="Create an account"
+            label="Sign in"
             style="text"
-            onClick={() => history.push("/signup")}
+            onClick={() => history.push("/login")}
           />
         </div>
       </div>
@@ -61,4 +52,5 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
+
