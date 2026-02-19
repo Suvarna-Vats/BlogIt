@@ -79,14 +79,12 @@ const useCategory = () => {
   );
 
   return {
-    // context driven
     isCategorySidebarOpen,
     closeCategorySidebar,
     selectedCategoryId,
     setSelectedCategory,
     clearSelectedCategory,
 
-    // sidebar + modal state
     categories: filteredCategories,
     searchTerm,
     setSearchTerm,

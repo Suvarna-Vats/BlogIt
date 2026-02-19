@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include Pundit::Authorization
+
   protect_from_forgery
   before_action :authenticate_user_using_x_auth_token, if: :json_request?
 
@@ -10,7 +12,12 @@ class ApplicationController < ActionController::Base
     errors.full_messages.to_sentence
   end
 
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from StandardError, with: :handle_api_exception
+
+  def user_not_authorized
+    render_error(t("not_authorized"), :forbidden)
+  end
 
   def handle_api_exception(exception)
     case exception

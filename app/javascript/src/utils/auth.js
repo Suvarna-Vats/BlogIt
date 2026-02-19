@@ -10,4 +10,3 @@ const isLoggedIn = () => {
 const getLoggedInUserName = () => getFromLocalStorage("userName");
 
 export { getLoggedInUserName, isLoggedIn };
-

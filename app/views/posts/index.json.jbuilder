@@ -16,12 +16,6 @@ json.posts @posts do |post|
       :email
   end
 
-  json.organization do
-    json.extract! post.organization,
-      :id,
-      :name
-  end
-
   json.categories post.categories do |category|
     json.extract! category,
       :id,

@@ -46,9 +46,9 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
+  gem "minitest", "~> 5.25"
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
-  gem "minitest", "~> 5.25"
 end
 
 group :development do
@@ -64,6 +64,7 @@ end
 
 gem "bcrypt", "~> 3.1.7"
 gem "connection_pool", "~> 2.4"
+gem "pundit"
 gem "react-rails", "~> 2.7.1"
 gem "solargraph", group: :development
 gem "sprockets"
