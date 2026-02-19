@@ -2,8 +2,9 @@ import React from "react";
 
 import { BackButton } from "components/commons";
 
-import Layout from "../../commons/Layout";
 import Show from "./Show";
+
+import Layout from "../../commons/Layout";
 
 const Blog = () => (
   <Layout>

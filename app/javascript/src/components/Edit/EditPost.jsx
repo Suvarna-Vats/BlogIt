@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import { Spinner } from "@bigbinary/neetoui";
-import Layout from "src/commons/Layout";
 import { BackButton, PostForm } from "components/commons";
 import { useHistory, useParams } from "react-router-dom";
 import { destroyPost, fetchPost, updatePost } from "src/apis/posts";
+import Layout from "src/commons/Layout";
 
 const EditPost = () => {
   const history = useHistory();
@@ -51,6 +51,13 @@ const EditPost = () => {
 
   if (!post) return null;
 
+  const initialFormValues = {
+    title: post.title,
+    description: post.description,
+    categories: post.categories,
+    status: post.status,
+  };
+
   return (
     <Layout>
       <div className="mx-auto w-full max-w-5xl">
@@ -59,12 +66,7 @@ const EditPost = () => {
         </div>
         <PostForm
           heading="Edit blog post"
-          initialValues={{
-            title: post.title,
-            description: post.description,
-            categories: post.categories,
-            status: post.status,
-          }}
+          initialValues={initialFormValues}
           onCancel={() => history.push("/edit")}
           onDelete={handleDelete}
           onSubmit={async payload => {
