@@ -67,9 +67,13 @@ const Show = () => {
             </Typography>
             {isOwner && (
               <Button
+                aria-label="Edit post"
+                className="rounded bg-white transition-colors hover:bg-gray-100"
                 icon={Edit}
+                iconSize={20}
                 size="small"
-                style="secondary"
+                style="text"
+                tooltipProps={{ content: "Edit", position: "bottom" }}
                 onClick={() => history.push(`/blogs/${slug}/edit`)}
               />
             )}
