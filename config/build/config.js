@@ -17,6 +17,7 @@ const alias = {
   common: absolutePath("src/common"),
   components: absolutePath("src/components"),
   utils: absolutePath("src/utils"),
+  "neeto-ui": absolutePath("src/neeto-ui"),
 };
 
 export { alias };

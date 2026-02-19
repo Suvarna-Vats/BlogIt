@@ -1,5 +1,6 @@
 const BLOG_NAV_ITEMS = [
   { label: "Blog posts", to: "/blogs", icon: "ri-file-list-2-line" },
+  { label: "Edit posts", to: "/edit", icon: "ri-edit-2-line" },
   { label: "Categories", icon: "ri-price-tag-3-line", action: "categories" },
   { label: "New blog post", to: "/blogs/new", icon: "ri-add-line" },
 ];

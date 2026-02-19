@@ -24,3 +24,4 @@ json.posts @posts do |post|
       :name
   end
 end
+

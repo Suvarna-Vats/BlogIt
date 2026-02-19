@@ -1,6 +1,7 @@
 en:
   successfully_created: "Successfully created!"
   successfully_updated: "Successfully updated!"
+  successfully_deleted: "Successfully deleted!"
   not_authorized: "You are not authorized to perform this action."
   user:
     signed_up: "Account created successfully. Please sign in."

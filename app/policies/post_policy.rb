@@ -13,11 +13,20 @@ class PostPolicy
   end
 
   def show?
-    post.organization_id == user.organization_id
+    post.organization_id == user.organization_id &&
+      (post.published? || user.id == post.user_id)
   end
 
   def update?
     user.id == post.user_id
+  end
+
+  def destroy?
+    update?
+  end
+
+  def mine?
+    true
   end
 
   class Scope
@@ -29,7 +38,7 @@ class PostPolicy
     end
 
     def resolve
-      scope.where(organization_id: user.organization_id)
+      scope.where(organization_id: user.organization_id, status: "published")
     end
   end
 end

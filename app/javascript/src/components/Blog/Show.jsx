@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import { Spinner, Tag, Typography } from "@bigbinary/neetoui";
+import { Edit } from "@bigbinary/neeto-icons";
+import { Button, Spinner, Tag, Typography } from "@bigbinary/neetoui";
 import { is, isNil, reject } from "ramda";
 import { useHistory, useParams } from "react-router-dom";
 import { fetchPost } from "src/apis/posts";
+import { getFromLocalStorage } from "utils/storage";
 
 import { formatPostDate } from "./utis";
 
@@ -14,8 +16,9 @@ const Show = () => {
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const formattedDate = formatPostDate(post?.created_at);
+  const formattedDate = formatPostDate(post?.updated_at);
   const authorName = post?.user?.name;
+  const isOwner = Number(getFromLocalStorage("userId")) === post?.user?.id;
   const safeCategories = is(Array, post?.categories)
     ? reject(isNil, post.categories)
     : [];
@@ -58,9 +61,19 @@ const Show = () => {
               ))}
             </div>
           )}
-          <Typography component="h1" style="h2" weight="bold">
-            {post?.title}
-          </Typography>
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <Typography component="h1" style="h2" weight="bold">
+              {post?.title}
+            </Typography>
+            {isOwner && (
+              <Button
+                icon={Edit}
+                size="small"
+                style="secondary"
+                onClick={() => history.push(`/blogs/${slug}/edit`)}
+              />
+            )}
+          </div>
           {(authorName || formattedDate) && (
             <Typography
               className="mt-3 text-gray-500"

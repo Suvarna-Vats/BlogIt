@@ -7,6 +7,8 @@ class Post < ApplicationRecord
   belongs_to :organization
   has_and_belongs_to_many :categories
 
+  enum :status, { draft: "draft", published: "published" }, default: "published"
+
   validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }
   validates :description, presence: true, length: { maximum: MAX_DESCRIPTION_LENGTH }
   validates_inclusion_of :is_bloggable, in: [ true, false ]
