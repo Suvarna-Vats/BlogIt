@@ -1,19 +1,19 @@
 import React from "react";
 
+import Layout from "components/Blog/Layout";
 import { BackButton } from "components/commons";
 
-import Layout from "./Layout";
-import Show from "./Show";
+import New from "./New";
 
-const Blog = () => (
+const NewBlogPost = () => (
   <Layout>
     <div className="mx-auto w-full max-w-5xl">
       <div className="mb-10">
         <BackButton to="/blogs" />
       </div>
-      <Show />
+      <New />
     </div>
   </Layout>
 );
 
-export default Blog;
+export default NewBlogPost;

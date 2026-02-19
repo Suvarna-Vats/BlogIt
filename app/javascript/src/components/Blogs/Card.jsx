@@ -1,10 +1,9 @@
 import React from "react";
 
 import { Typography } from "@bigbinary/neetoui";
+import { formatPostDate, truncate } from "components/Blog/utis";
 import { is, isNil, reject } from "ramda";
 import { NavLink } from "react-router-dom";
-
-import { formatPostDate, truncate } from "./utis";
 
 const Card = ({ post }) => {
   const {
