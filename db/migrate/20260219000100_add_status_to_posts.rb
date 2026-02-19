@@ -13,4 +13,3 @@ class AddStatusToPosts < ActiveRecord::Migration[8.0]
     remove_column :posts, :status
   end
 end
-

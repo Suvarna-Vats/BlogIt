@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
@@ -9,8 +11,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
             name: "Oliver Smith",
             email: "oliver.smith@example.com",
             password: "welcome",
-            password_confirmation: "welcome",
-          },
+            password_confirmation: "welcome"
+          }
         },
         as: :json
     end
@@ -35,4 +37,3 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert response.parsed_body["error"].present?
   end
 end
-

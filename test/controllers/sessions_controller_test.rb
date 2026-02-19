@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class SessionsControllerTest < ActionDispatch::IntegrationTest
@@ -51,7 +53,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     delete session_url,
       headers: {
         "X-Auth-Email" => user.email,
-        "X-Auth-Token" => old_token,
+        "X-Auth-Token" => old_token
       },
       as: :json
 
