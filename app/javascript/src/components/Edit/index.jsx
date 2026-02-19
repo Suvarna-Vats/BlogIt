@@ -1,6 +1,6 @@
 import React from "react";
 
-import Layout from "components/Blog/Layout";
+import Layout from "src/commons/Layout";
 import { BackButton } from "components/commons";
 
 import Dashboard from "./Dashboard";

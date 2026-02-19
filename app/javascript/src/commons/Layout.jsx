@@ -1,26 +1,25 @@
 import React, { useMemo } from "react";
 
 import Category from "components/Category";
-import { map } from "ramda";
 import Sidebar from "src/commons/Sidebar";
 import { useCategoryContext } from "src/contexts/category";
 
-import { BLOG_NAV_ITEMS } from "../constants";
+import { SIDEBAR_ITEMS } from "./constants";
 
 const Layout = ({ children }) => {
   const { isCategorySidebarOpen, toggleCategorySidebar } = useCategoryContext();
 
   const sidebarItems = useMemo(
     () =>
-      map(item => {
-        if (item.action !== "categories") return item;
-
-        return {
-          ...item,
-          onClick: toggleCategorySidebar,
-          isActive: isCategorySidebarOpen,
-        };
-      }, BLOG_NAV_ITEMS),
+      SIDEBAR_ITEMS.map(item =>
+        item.action === "categories"
+          ? {
+              ...item,
+              onClick: toggleCategorySidebar,
+              isActive: isCategorySidebarOpen,
+            }
+          : item
+      ),
     [isCategorySidebarOpen, toggleCategorySidebar]
   );
 

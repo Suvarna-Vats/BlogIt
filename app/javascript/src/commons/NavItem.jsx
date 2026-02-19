@@ -18,8 +18,6 @@ const NavItem = ({ isExpanded, item }) => {
 
   const isItemActive = isActive ?? isRouteActive;
 
-  const Icon = () => <i className={classNames(icon, "text-xl")} />;
-
   const handleClick = () => {
     if (onClick) {
       onClick();
@@ -31,7 +29,7 @@ const NavItem = ({ isExpanded, item }) => {
   return (
     <Button
       aria-label={label}
-      icon={Icon}
+      icon={icon}
       label={isExpanded ? label : ""}
       style="text"
       className={classNames(

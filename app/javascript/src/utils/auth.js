@@ -1,12 +1,20 @@
 import { getFromLocalStorage } from "./storage";
 
+const getLoggedInUserEmail = () => getFromLocalStorage("authEmail");
+const getLoggedInUserId = () => getFromLocalStorage("userId");
+
 const isLoggedIn = () => {
   const token = getFromLocalStorage("authToken");
-  const email = getFromLocalStorage("authEmail");
+  const email = getLoggedInUserEmail();
 
   return Boolean(token && email);
 };
 
 const getLoggedInUserName = () => getFromLocalStorage("userName");
 
-export { getLoggedInUserName, isLoggedIn };
+export {
+  getLoggedInUserEmail,
+  getLoggedInUserId,
+  getLoggedInUserName,
+  isLoggedIn,
+};

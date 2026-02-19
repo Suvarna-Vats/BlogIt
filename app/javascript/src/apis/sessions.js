@@ -8,4 +8,3 @@ const createSession = async payload =>
 const destroySession = async () => axios.delete("/session");
 
 export { createSession, destroySession };
-

@@ -27,4 +27,3 @@ const SIGNUP_VALIDATION_SCHEMA = yup.object().shape({
 });
 
 export { LOGIN_VALIDATION_SCHEMA, SIGNUP_VALIDATION_SCHEMA };
-

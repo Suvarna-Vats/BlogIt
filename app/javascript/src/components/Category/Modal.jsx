@@ -59,4 +59,3 @@ const CreateCategoryModal = ({ isOpen, isSubmitting, onClose, onSubmit }) => {
 };
 
 export default CreateCategoryModal;
-

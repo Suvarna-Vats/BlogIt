@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { Spinner } from "@bigbinary/neetoui";
-import Layout from "components/Blog/Layout";
+import Layout from "src/commons/Layout";
 import { BackButton, PostForm } from "components/commons";
 import { useHistory, useParams } from "react-router-dom";
 import { destroyPost, fetchPost, updatePost } from "src/apis/posts";

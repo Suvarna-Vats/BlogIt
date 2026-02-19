@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Check, Down } from "@bigbinary/neeto-icons";
 import { Button, Dropdown as NeetoDropdown } from "@bigbinary/neetoui";
 import { actionLabel } from "src/components/utis";
 
@@ -32,7 +33,7 @@ const PostFormDropdown = ({
           disabled={isMenuDisabled}
           type="button"
         >
-          <i className="ri-arrow-down-s-line text-lg" />
+          <Down size={18} />
         </button>
       }
     >
@@ -40,13 +41,13 @@ const PostFormDropdown = ({
         <NeetoDropdown.MenuItem.Button onClick={() => onChange("published")}>
           <div className="flex w-full items-center justify-between gap-4">
             <span>Publish</span>
-            {value === "published" && <i className="ri-check-line text-base" />}
+            {value === "published" && <Check size={16} />}
           </div>
         </NeetoDropdown.MenuItem.Button>
         <NeetoDropdown.MenuItem.Button onClick={() => onChange("draft")}>
           <div className="flex w-full items-center justify-between gap-4">
             <span>Save as draft</span>
-            {value === "draft" && <i className="ri-check-line text-base" />}
+            {value === "draft" && <Check size={16} />}
           </div>
         </NeetoDropdown.MenuItem.Button>
       </NeetoDropdown.Menu>

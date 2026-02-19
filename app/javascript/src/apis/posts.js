@@ -16,4 +16,11 @@ const updatePost = async (slug, payload) =>
 
 const destroyPost = async slug => axios.delete(`/posts/${slug}`);
 
-export { createPost, destroyPost, fetchMyPosts, fetchPost, fetchPosts, updatePost };
+export {
+  createPost,
+  destroyPost,
+  fetchMyPosts,
+  fetchPost,
+  fetchPosts,
+  updatePost,
+};

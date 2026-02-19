@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import { Button, Typography } from "@bigbinary/neetoui";
+import PostFormActions from "components/commons/actions";
 import { is } from "ramda";
 import { fetchCategories } from "src/apis/categories";
 import {
@@ -8,7 +9,6 @@ import {
   defaultSubmitStatusFor,
 } from "src/components/utis";
 
-import PostFormActions from "./actions";
 import PostFormDropdown from "./dropdown";
 import PostFormEdit from "./Edit";
 

@@ -14,9 +14,21 @@ class Post < ApplicationRecord
   validates :slug, uniqueness: true
   validate :slug_not_changed
   before_validation :set_organization_id
+  before_save :set_last_published_at, if: :should_set_last_published_at?
   before_create :set_slug
 
   private
+
+    def should_set_last_published_at?
+      return false unless published?
+
+      new_record? || will_save_change_to_status?
+    end
+
+    def set_last_published_at
+      self.last_published_at = Time.current if will_save_change_to_status?
+      self.last_published_at ||= Time.current
+    end
 
     def set_organization_id
       self.organization_id ||= user&.organization_id

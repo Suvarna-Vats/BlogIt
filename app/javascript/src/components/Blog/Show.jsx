@@ -5,7 +5,7 @@ import { Button, Spinner, Tag, Typography } from "@bigbinary/neetoui";
 import { is, isNil, reject } from "ramda";
 import { useHistory, useParams } from "react-router-dom";
 import { fetchPost } from "src/apis/posts";
-import { getFromLocalStorage } from "utils/storage";
+import { getLoggedInUserEmail } from "utils/auth";
 
 import { formatPostDate } from "../utis";
 
@@ -18,7 +18,8 @@ const Show = () => {
 
   const formattedDate = formatPostDate(post?.updated_at);
   const authorName = post?.user?.name;
-  const isOwner = Number(getFromLocalStorage("userId")) === post?.user?.id;
+  const loggedInEmail = getLoggedInUserEmail();
+  const isOwner = Boolean(loggedInEmail) && loggedInEmail === post?.user?.email;
   const safeCategories = is(Array, post?.categories)
     ? reject(isNil, post.categories)
     : [];

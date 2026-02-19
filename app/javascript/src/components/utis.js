@@ -12,6 +12,20 @@ const formatPostDate = createdAt => {
   }).format(parsed);
 };
 
+const formatPostDateTime = value => {
+  if (!value) return null;
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return null;
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(parsed);
+};
+
 const truncate = (value = "", maxLength = 220) =>
   ifElse(
     pipe(length, gt(__, maxLength)),
@@ -34,10 +48,34 @@ const defaultSubmitStatusFor = currentStatus =>
 const actionLabel = status =>
   status === "published" ? "Publish" : "Save as draft";
 
+const buildPostActions = ({ status, onChangeStatus, onDelete }) =>
+  [
+    status === "draft" &&
+      typeof onChangeStatus === "function" && {
+        key: "publish",
+        label: "Publish",
+        onClick: () => onChangeStatus("published"),
+      },
+    status === "published" &&
+      typeof onChangeStatus === "function" && {
+        key: "unpublish",
+        label: "Unpublish",
+        onClick: () => onChangeStatus("draft"),
+      },
+    typeof onDelete === "function" && {
+      key: "delete",
+      label: "Delete",
+      style: "danger",
+      onClick: onDelete,
+    },
+  ].filter(Boolean);
+
 export {
   actionLabel,
   buildCategoryValue,
+  buildPostActions,
   defaultSubmitStatusFor,
   formatPostDate,
+  formatPostDateTime,
   truncate,
 };

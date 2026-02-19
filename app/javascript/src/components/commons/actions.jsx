@@ -1,16 +1,11 @@
 import React from "react";
 
+import { MatrixDots } from "@bigbinary/neeto-icons";
 import { Dropdown } from "@bigbinary/neetoui";
+import { buildPostActions } from "src/components/utis";
 
-const PostFormActions = ({ onDelete }) => {
-  const actions = [
-    typeof onDelete === "function" && {
-      key: "delete",
-      label: "Delete",
-      style: "danger",
-      onClick: onDelete,
-    },
-  ].filter(Boolean);
+const PostActions = ({ status, onChangeStatus, onDelete }) => {
+  const actions = buildPostActions({ status, onChangeStatus, onDelete });
 
   if (actions.length === 0) return null;
 
@@ -23,7 +18,7 @@ const PostFormActions = ({ onDelete }) => {
           className="grid h-10 w-10 place-items-center rounded-md text-gray-700 hover:bg-gray-100"
           type="button"
         >
-          <i className="ri-more-2-line text-lg" />
+          <MatrixDots size={18} />
         </button>
       }
     >
@@ -48,4 +43,4 @@ const PostFormActions = ({ onDelete }) => {
   );
 };
 
-export default PostFormActions;
+export default PostActions;

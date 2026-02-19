@@ -6,6 +6,7 @@ import Blogs from "components/Blogs";
 import { PrivateRoute } from "components/commons";
 import EditPosts from "components/Edit";
 import EditPost from "components/Edit/EditPost";
+import MyBlogPosts from "components/MyBlogPosts";
 import NewBlogPost from "components/New";
 import {
   Redirect,
@@ -29,6 +30,7 @@ const App = () => (
         <Route exact component={SignUp} path="/signup" />
         <PrivateRoute exact component={Blogs} path="/blogs" />
         <PrivateRoute exact component={EditPosts} path="/edit" />
+        <PrivateRoute exact component={MyBlogPosts} path="/my-blog-posts" />
         <PrivateRoute exact component={NewBlogPost} path="/blogs/new" />
         <PrivateRoute exact component={EditPost} path="/blogs/:slug/edit" />
         <PrivateRoute exact component={Blog} path="/blogs/:slug" />
