@@ -63,6 +63,7 @@ const EditPost = () => {
             title: post.title,
             description: post.description,
             categories: post.categories,
+            status: post.status,
           }}
           onCancel={() => history.push("/edit")}
           onDelete={handleDelete}

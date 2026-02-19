@@ -5,7 +5,7 @@ import { map } from "ramda";
 import Sidebar from "src/commons/Sidebar";
 import { useCategoryContext } from "src/contexts/category";
 
-import { BLOG_NAV_ITEMS } from "./constants";
+import { BLOG_NAV_ITEMS } from "../constants";
 
 const Layout = ({ children }) => {
   const { isCategorySidebarOpen, toggleCategorySidebar } = useCategoryContext();

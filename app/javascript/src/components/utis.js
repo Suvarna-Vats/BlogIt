@@ -19,4 +19,25 @@ const truncate = (value = "", maxLength = 220) =>
     identity
   )(value);
 
-export { formatPostDate, truncate };
+const buildCategoryValue = category => {
+  if (!category) return null;
+  const id = category.value ?? category.id;
+  const name = category.label ?? category.name;
+  if (!id || !name) return null;
+
+  return { label: name, value: id };
+};
+
+const defaultSubmitStatusFor = currentStatus =>
+  currentStatus === "published" ? "draft" : "published";
+
+const actionLabel = status =>
+  status === "published" ? "Publish" : "Save as draft";
+
+export {
+  actionLabel,
+  buildCategoryValue,
+  defaultSubmitStatusFor,
+  formatPostDate,
+  truncate,
+};

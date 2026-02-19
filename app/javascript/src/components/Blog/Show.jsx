@@ -7,7 +7,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { fetchPost } from "src/apis/posts";
 import { getFromLocalStorage } from "utils/storage";
 
-import { formatPostDate } from "./utis";
+import { formatPostDate } from "../utis";
 
 const Show = () => {
   const history = useHistory();

@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 
 import { Edit } from "@bigbinary/neeto-icons";
 import { Button, Table, Typography } from "@bigbinary/neetoui";
-import { formatPostDate } from "components/Blog/utis";
+import { formatPostDate } from "src/components/utis";
 
 const PostsTable = ({ title, posts = [], onEdit }) => {
   const columnData = useMemo(
