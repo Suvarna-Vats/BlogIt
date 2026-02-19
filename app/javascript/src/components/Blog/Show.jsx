@@ -20,6 +20,7 @@ const Show = () => {
   const authorName = post?.user?.name;
   const loggedInEmail = getLoggedInUserEmail();
   const isOwner = Boolean(loggedInEmail) && loggedInEmail === post?.user?.email;
+  const isDraft = post?.status === "draft";
   const safeCategories = is(Array, post?.categories)
     ? reject(isNil, post.categories)
     : [];
@@ -63,9 +64,19 @@ const Show = () => {
             </div>
           )}
           <div className="flex flex-wrap items-start justify-between gap-4">
-            <Typography component="h1" style="h2" weight="bold">
-              {post?.title}
-            </Typography>
+            <div className="flex flex-wrap items-center gap-3">
+              <Typography component="h1" style="h2" weight="bold">
+                {post?.title}
+              </Typography>
+              {isDraft && (
+                <span
+                  aria-label="Draft post"
+                  className="inline-flex items-center rounded-full border border-rose-200 bg-rose-50 px-2 py-0.5 text-xs font-semibold text-rose-700"
+                >
+                  Draft
+                </span>
+              )}
+            </div>
             {isOwner && (
               <Button
                 aria-label="Edit post"
