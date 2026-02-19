@@ -65,7 +65,7 @@ end
 gem "bcrypt", "~> 3.1.7"
 gem "connection_pool", "~> 2.4"
 gem "pundit"
-gem "react-rails", "~> 2.7.1"
+gem "react-rails", "~> 3.2.1"
 gem "solargraph", group: :development
 gem "sprockets"
 gem "sprockets-rails"
