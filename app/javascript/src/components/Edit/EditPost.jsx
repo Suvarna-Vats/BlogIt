@@ -39,7 +39,7 @@ const EditPost = () => {
       <Layout>
         <div className="mx-auto w-full max-w-5xl">
           <div className="mb-10">
-            <BackButton to="/edit" />
+            <BackButton to={-1} />
           </div>
           <div className="grid place-items-center py-24">
             <Spinner />
@@ -62,12 +62,12 @@ const EditPost = () => {
     <Layout>
       <div className="mx-auto w-full max-w-5xl">
         <div className="mb-10">
-          <BackButton to="/edit" />
+          <BackButton to={-1} />
         </div>
         <PostForm
           heading="Edit blog post"
           initialValues={initialFormValues}
-          onCancel={() => history.push("/edit")}
+          onCancel={() => history.goBack()}
           onDelete={handleDelete}
           onSubmit={async payload => {
             await updatePost(slug, payload);
