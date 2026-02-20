@@ -7,8 +7,7 @@ import { useFetchMyPosts } from "src/hooks/usePosts";
 
 const Dashboard = () => {
   const history = useHistory();
-  const { data, isLoading } = useFetchMyPosts();
-  const posts = data?.data?.posts ?? [];
+  const { data: { posts = [] } = {}, isLoading } = useFetchMyPosts();
 
   const handleEdit = slug => history.push(`/blogs/${slug}/edit`);
 

@@ -55,7 +55,7 @@ const usePostForm = ({ initialValues, onChange, onSubmit }) => {
   const categoryOptions = useMemo(
     () =>
       pipe(
-        pathOr([], ["data", "categories"]),
+        pathOr([], ["categories"]),
         map(category => ({ label: category.name, value: category.id }))
       )(categoriesResponse),
     [categoriesResponse]

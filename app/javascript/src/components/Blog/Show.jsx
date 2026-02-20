@@ -9,10 +9,9 @@ const Show = () => {
   const history = useHistory();
   const { slug } = useParams();
 
-  const { data, isLoading } = useFetchPost(slug, {
+  const { data: { post = null } = {}, isLoading } = useFetchPost(slug, {
     onError: () => history.push("/blogs"),
   });
-  const post = data?.data?.post ?? null;
 
   if (isLoading) {
     return (

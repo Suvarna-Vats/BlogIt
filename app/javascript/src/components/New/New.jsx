@@ -6,14 +6,14 @@ import { useCreatePost } from "src/hooks/usePosts";
 
 const New = () => {
   const history = useHistory();
-  const { mutateAsync: createPost } = useCreatePost();
+  const { mutate: createPost } = useCreatePost();
 
   return (
     <PostForm
       heading="New blog post"
       onCancel={() => history.push("/blogs")}
-      onSubmit={async payload => {
-        await createPost(payload);
+      onSubmit={payload => {
+        createPost(payload);
         history.push("/blogs");
       }}
     />

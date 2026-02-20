@@ -11,8 +11,7 @@ const Blogs = () => {
   const history = useHistory();
   const { selectedCategoryId } = useCategoryContext();
   const params = selectedCategoryId ? { category_id: selectedCategoryId } : {};
-  const { data, isLoading } = useFetchPosts(params);
-  const posts = data?.data?.posts ?? [];
+  const { data: { posts = [] } = {}, isLoading } = useFetchPosts(params);
 
   const handleAddNew = () => history.push("/blogs/new");
 

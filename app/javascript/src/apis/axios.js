@@ -23,14 +23,10 @@ const setAuthHeaders = () => {
 };
 
 const handleSuccessResponse = response => {
-  if (response) {
-    response.success = response.status >= 200 && response.status < 300;
-    if (response.data.notice) {
-      Toastr.success(response.data.notice);
-    }
-  }
+  const { data } = response ?? {};
+  if (data?.notice) Toastr.success(data.notice);
 
-  return response;
+  return data;
 };
 
 const handleErrorResponse = axiosErrorObject => {

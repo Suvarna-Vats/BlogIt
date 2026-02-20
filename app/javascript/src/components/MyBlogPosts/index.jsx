@@ -7,8 +7,7 @@ import { useFetchMyPosts } from "src/hooks/usePosts";
 import Posts from "./posts";
 
 const MyBlogPosts = () => {
-  const { data, isLoading, refetch } = useFetchMyPosts();
-  const posts = data?.data?.posts ?? [];
+  const { data: { posts = [] } = {}, isLoading, refetch } = useFetchMyPosts();
 
   return (
     <Layout>

@@ -50,19 +50,17 @@ const actionLabel = status =>
 
 const buildPostActions = ({ status, onChangeStatus, onDelete }) =>
   [
-    status === "draft" &&
-      typeof onChangeStatus === "function" && {
-        key: "publish",
-        label: "Publish",
-        onClick: () => onChangeStatus("published"),
-      },
-    status === "published" &&
-      typeof onChangeStatus === "function" && {
-        key: "unpublish",
-        label: "Unpublish",
-        onClick: () => onChangeStatus("draft"),
-      },
-    typeof onDelete === "function" && {
+    status === "draft" && {
+      key: "publish",
+      label: "Publish",
+      onClick: () => onChangeStatus("published"),
+    },
+    status === "published" && {
+      key: "unpublish",
+      label: "Unpublish",
+      onClick: () => onChangeStatus("draft"),
+    },
+    {
       key: "delete",
       label: "Delete",
       style: "danger",

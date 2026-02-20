@@ -26,10 +26,9 @@ const useCategory = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const { data, isLoading } = useFetchCategories({
+  const { data: { categories = [] } = {}, isLoading } = useFetchCategories({
     enabled: isCategorySidebarOpen,
   });
-  const categories = data?.data?.categories ?? [];
 
   const filteredCategories = useMemo(() => {
     const normalizedNeedle = pipe(trim, toLower)(searchTerm);

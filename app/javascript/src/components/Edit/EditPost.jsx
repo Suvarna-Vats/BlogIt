@@ -14,16 +14,14 @@ const EditPost = () => {
   const history = useHistory();
   const { slug } = useParams();
 
-  const { data, isLoading } = useFetchPost(slug, {
+  const { data: { post = null } = {}, isLoading } = useFetchPost(slug, {
     onError: () => history.push("/edit"),
   });
-  const post = data?.data?.post ?? null;
-
   const { mutateAsync: updatePost } = useUpdatePost();
-  const { mutateAsync: destroyPost } = useDestroyPost();
+  const { mutate: destroyPost } = useDestroyPost();
 
-  const handleDelete = async () => {
-    await destroyPost(slug);
+  const handleDelete = () => {
+    destroyPost(slug);
     history.push("/edit");
   };
 
