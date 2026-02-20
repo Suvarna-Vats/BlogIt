@@ -16,4 +16,3 @@ class AddLastPublishedAtToPosts < ActiveRecord::Migration[8.0]
     remove_column :posts, :last_published_at
   end
 end
-
