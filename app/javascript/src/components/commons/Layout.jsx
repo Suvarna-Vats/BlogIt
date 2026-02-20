@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 
 import Category from "components/Category";
-import Sidebar from "src/commons/Sidebar";
+import Sidebar from "src/components/commons/Sidebar";
 import { useCategoryContext } from "src/contexts/category";
 
 import { SIDEBAR_ITEMS } from "./constants";

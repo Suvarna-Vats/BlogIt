@@ -1,6 +1,6 @@
 import React from "react";
 
-import Layout from "src/commons/Layout";
+import Layout from "src/components/commons/Layout";
 
 import Blogs from "./Blogs";
 

@@ -3,7 +3,7 @@ import React from "react";
 import { Spinner } from "@bigbinary/neetoui";
 import { BackButton, PostForm } from "components/commons";
 import { useHistory, useParams } from "react-router-dom";
-import Layout from "src/commons/Layout";
+import Layout from "src/components/commons/Layout";
 import {
   useDestroyPost,
   useFetchPost,

@@ -4,7 +4,7 @@ import { BackButton } from "components/commons";
 
 import Show from "./Show";
 
-import Layout from "../../commons/Layout";
+import Layout from "../commons/Layout";
 
 const Blog = () => (
   <Layout>

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { BackButton } from "components/commons";
-import Layout from "src/commons/Layout";
+import Layout from "src/components/commons/Layout";
 
 import Dashboard from "./Dashboard";
 

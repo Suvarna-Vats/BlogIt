@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Typography } from "@bigbinary/neetoui";
-import Layout from "src/commons/Layout";
+import Layout from "src/components/commons/Layout";
 import { useFetchMyPosts } from "src/hooks/usePosts";
 
 import Posts from "./posts";
