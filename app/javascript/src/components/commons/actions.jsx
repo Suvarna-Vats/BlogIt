@@ -2,10 +2,11 @@ import React from "react";
 
 import { MatrixDots } from "@bigbinary/neeto-icons";
 import { Dropdown } from "@bigbinary/neetoui";
+import withT from "src/commons/withT";
 import { buildPostActions } from "src/components/utis";
 
-const PostActions = ({ status, onChangeStatus, onDelete }) => {
-  const actions = buildPostActions({ status, onChangeStatus, onDelete });
+const PostActions = ({ status, onChangeStatus, onDelete, t }) => {
+  const actions = buildPostActions({ status, onChangeStatus, onDelete, t });
 
   if (actions.length === 0) return null;
 
@@ -14,7 +15,7 @@ const PostActions = ({ status, onChangeStatus, onDelete }) => {
       strategy="fixed"
       customTarget={
         <button
-          aria-label="More actions"
+          aria-label={t("postForm.actions.moreActionsAria")}
           className="grid h-10 w-10 place-items-center rounded-md text-gray-700 hover:bg-gray-100"
           type="button"
         >
@@ -43,4 +44,4 @@ const PostActions = ({ status, onChangeStatus, onDelete }) => {
   );
 };
 
-export default PostActions;
+export default withT(PostActions);

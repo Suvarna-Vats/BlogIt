@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 
 import { useHistory } from "react-router-dom";
+import routes from "routes";
 import { useCreateUser } from "src/hooks/useUser";
 
 const useSignUp = () => {
@@ -17,7 +18,7 @@ const useSignUp = () => {
       };
 
       await createUser(payload);
-      history.push("/login");
+      history.push(routes.auth.login);
     },
     [createUser, history]
   );

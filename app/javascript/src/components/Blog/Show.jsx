@@ -3,6 +3,7 @@ import React from "react";
 import { Spinner } from "@bigbinary/neetoui";
 import Blog from "components/commons/Blog";
 import { useHistory, useParams } from "react-router-dom";
+import routes from "routes";
 import { useFetchPost } from "src/hooks/usePosts";
 
 const Show = () => {
@@ -10,7 +11,7 @@ const Show = () => {
   const { slug } = useParams();
 
   const { data: { post = null } = {}, isLoading } = useFetchPost(slug, {
-    onError: () => history.push("/blogs"),
+    onError: () => history.push(routes.blogs.index),
   });
 
   if (isLoading) {

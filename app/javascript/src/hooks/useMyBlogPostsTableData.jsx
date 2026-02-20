@@ -2,7 +2,9 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { Tooltip, Typography } from "@bigbinary/neetoui";
 import PostActions from "components/commons/actions";
+import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
+import routes from "routes";
 import {
   PAGE_SIZE,
   TITLE_TRUNCATE_LENGTH,
@@ -12,6 +14,7 @@ import { formatPostDateTime, truncate } from "src/components/utis";
 import { useDestroyPost, useUpdatePost } from "src/hooks/usePosts";
 
 const useMyBlogPostsTableData = ({ posts = [], onReload }) => {
+  const { t } = useTranslation();
   const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE_NUMBER);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const { mutate: updatePost } = useUpdatePost({
@@ -36,7 +39,7 @@ const useMyBlogPostsTableData = ({ posts = [], onReload }) => {
   const columnData = useMemo(
     () => [
       {
-        title: "TITLE",
+        title: t("myBlogPosts.table.title"),
         dataIndex: "title",
         key: "title",
         render: (_title, post) => {
@@ -45,7 +48,7 @@ const useMyBlogPostsTableData = ({ posts = [], onReload }) => {
           const isTruncated = displayTitle !== title;
 
           const titleNode = (
-            <NavLink to={`/blogs/${post.slug}/edit`}>
+            <NavLink to={routes.blogs.edit(post.slug)}>
               <Typography
                 className="max-w-[22rem] truncate text-gray-900 hover:underline"
                 style="body2"
@@ -68,7 +71,7 @@ const useMyBlogPostsTableData = ({ posts = [], onReload }) => {
         },
       },
       {
-        title: "CATEGORY",
+        title: t("myBlogPosts.table.category"),
         dataIndex: "categories",
         key: "categories",
         render: categories => (
@@ -81,7 +84,7 @@ const useMyBlogPostsTableData = ({ posts = [], onReload }) => {
         ),
       },
       {
-        title: "LAST PUBLISHED AT",
+        title: t("myBlogPosts.table.lastPublishedAt"),
         dataIndex: "last_published_at",
         key: "last_published_at",
         render: value => (
@@ -91,12 +94,12 @@ const useMyBlogPostsTableData = ({ posts = [], onReload }) => {
         ),
       },
       {
-        title: "STATUS",
+        title: t("myBlogPosts.table.status"),
         dataIndex: "status",
         key: "status",
         render: status => (
           <Typography className="text-gray-600" style="body3">
-            {status === "published" ? "Published" : "Draft"}
+            {status === "published" ? t("common.published") : t("common.draft")}
           </Typography>
         ),
       },
@@ -120,7 +123,7 @@ const useMyBlogPostsTableData = ({ posts = [], onReload }) => {
         ),
       },
     ],
-    [destroyPost, updatePost]
+    [destroyPost, t, updatePost]
   );
 
   return {

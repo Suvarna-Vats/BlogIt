@@ -2,12 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { Avatar, Button, Typography } from "@bigbinary/neetoui";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 
 const User = ({ isExpanded, userName, onLogout }) => {
+  const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const containerRef = useRef(null);
 
-  const safeUserName = userName?.trim() || "User";
+  const safeUserName = userName?.trim() || t("common.user");
 
   useEffect(() => {
     const handleOutsideClick = event => {
@@ -47,7 +49,7 @@ const User = ({ isExpanded, userName, onLogout }) => {
       )}
     >
       <button
-        aria-label="User menu"
+        aria-label={t("sidebar.userMenuAriaLabel")}
         type="button"
         className={classNames(
           "flex items-center gap-3 rounded-md p-1 hover:bg-gray-100",
@@ -85,7 +87,7 @@ const User = ({ isExpanded, userName, onLogout }) => {
           </Typography>
           <Button
             fullWidth
-            label="Logout"
+            label={t("common.logout")}
             style="text"
             onClick={handleLogout}
           />

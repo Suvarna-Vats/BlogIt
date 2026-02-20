@@ -45,24 +45,32 @@ const buildCategoryValue = category => {
 const defaultSubmitStatusFor = currentStatus =>
   currentStatus === "published" ? "draft" : "published";
 
-const actionLabel = status =>
-  status === "published" ? "Publish" : "Save as draft";
+const actionLabel = (status, t) => {
+  if (typeof t === "function") {
+    return status === "published"
+      ? t("postForm.submit.publish")
+      : t("postForm.submit.saveAsDraft");
+  }
 
-const buildPostActions = ({ status, onChangeStatus, onDelete }) =>
+  return status === "published" ? "Publish" : "Save as draft";
+};
+
+const buildPostActions = ({ status, onChangeStatus, onDelete, t }) =>
   [
     status === "draft" && {
       key: "publish",
-      label: "Publish",
+      label: typeof t === "function" ? t("postForm.submit.publish") : "Publish",
       onClick: () => onChangeStatus("published"),
     },
     status === "published" && {
       key: "unpublish",
-      label: "Unpublish",
+      label:
+        typeof t === "function" ? t("postForm.submit.unpublish") : "Unpublish",
       onClick: () => onChangeStatus("draft"),
     },
     {
       key: "delete",
-      label: "Delete",
+      label: typeof t === "function" ? t("postForm.submit.delete") : "Delete",
       style: "danger",
       onClick: onDelete,
     },

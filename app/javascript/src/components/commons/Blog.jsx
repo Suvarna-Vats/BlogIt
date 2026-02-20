@@ -3,7 +3,9 @@ import React from "react";
 import { Edit } from "@bigbinary/neeto-icons";
 import { Button, Tag, Typography } from "@bigbinary/neetoui";
 import { is, isNil, reject } from "ramda";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
+import routes from "routes";
 import { formatPostDate } from "src/components/utis";
 import { getLoggedInUserEmail } from "utils/auth";
 
@@ -27,6 +29,7 @@ const Blog = ({
   isPreview = false,
 }) => {
   const history = useHistory();
+  const { t } = useTranslation();
   const formattedDate = formatPostDate(updated_at);
   const authorName = user?.name;
   const loggedInEmail = getLoggedInUserEmail();
@@ -62,23 +65,26 @@ const Blog = ({
           </Typography>
           {isDraft && (
             <span
-              aria-label="Draft post"
+              aria-label={t("blog.draftAriaLabel")}
               className="inline-flex items-center rounded-full border border-rose-200 bg-rose-50 px-2 py-0.5 text-xs font-semibold text-rose-700"
             >
-              Draft
+              {t("common.draft")}
             </span>
           )}
         </div>
         {canEdit && (
           <Button
-            aria-label="Edit post"
+            aria-label={t("blog.editAriaLabel")}
             className="rounded bg-white transition-colors hover:bg-gray-100"
             icon={Edit}
             iconSize={20}
             size="small"
             style="text"
-            tooltipProps={{ content: "Edit", position: "bottom" }}
-            onClick={() => history.push(`/blogs/${slug}/edit`)}
+            tooltipProps={{
+              content: t("blog.editTooltip"),
+              position: "bottom",
+            }}
+            onClick={() => history.push(routes.blogs.edit(slug))}
           />
         )}
       </div>

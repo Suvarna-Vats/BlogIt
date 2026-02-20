@@ -3,7 +3,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import { HamburgerMenu } from "@bigbinary/neeto-icons";
 import { Button, Typography } from "@bigbinary/neetoui";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
+import routes from "routes";
 import { setAuthHeaders } from "src/apis/axios";
 import { useDestroySession } from "src/hooks/useSessions";
 import { getLoggedInUserName } from "utils/auth";
@@ -16,8 +18,17 @@ import User from "./User";
 const Sidebar = ({ items = DEFAULT_ITEMS }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const history = useHistory();
+  const { t } = useTranslation();
 
-  const navItems = useMemo(() => items ?? DEFAULT_ITEMS, [items]);
+  const baseNavItems = useMemo(() => items ?? DEFAULT_ITEMS, [items]);
+  const navItems = useMemo(
+    () =>
+      (baseNavItems ?? []).map(item => ({
+        ...item,
+        label: item.labelKey ? t(item.labelKey) : item.label,
+      })),
+    [baseNavItems, t]
+  );
   const [userName, setUserName] = useState(() => getLoggedInUserName());
   const { mutateAsync: destroySession } = useDestroySession();
 
@@ -42,13 +53,13 @@ const Sidebar = ({ items = DEFAULT_ITEMS }) => {
       });
       setUserName(null);
       setAuthHeaders();
-      history.push("/login");
+      history.push(routes.auth.login);
     }
   };
 
   return (
     <aside
-      aria-label="Sidebar"
+      aria-label={t("sidebar.ariaLabel")}
       className={classNames(
         "h-screen shrink-0 border-r bg-white",
         "flex flex-col",
@@ -63,10 +74,14 @@ const Sidebar = ({ items = DEFAULT_ITEMS }) => {
         )}
       >
         <Button
-          aria-label={isExpanded ? "Collapse sidebar" : "Expand sidebar"}
           className="grid h-10 w-10 place-items-center rounded-md text-gray-700 hover:bg-gray-100"
           icon={HamburgerMenu}
           style="text"
+          aria-label={
+            isExpanded
+              ? t("sidebar.collapseAriaLabel")
+              : t("sidebar.expandAriaLabel")
+          }
           onClick={() => setIsExpanded(prev => !prev)}
         />
         {isExpanded && (
@@ -76,19 +91,23 @@ const Sidebar = ({ items = DEFAULT_ITEMS }) => {
             style="body2"
             weight="semibold"
           >
-            Navigation
+            {t("common.navigation")}
           </Typography>
         )}
       </div>
       <nav
-        aria-label="Primary"
+        aria-label={t("sidebar.primaryNavAriaLabel")}
         className={classNames(
           "flex-1 px-2",
           isExpanded ? "space-y-1" : "space-y-2"
         )}
       >
         {navItems.map(item => (
-          <NavItem isExpanded={isExpanded} item={item} key={item.label} />
+          <NavItem
+            isExpanded={isExpanded}
+            item={item}
+            key={item.key ?? item.labelKey ?? item.label}
+          />
         ))}
       </nav>
       <div

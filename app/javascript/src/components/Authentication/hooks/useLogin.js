@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 
 import { useHistory } from "react-router-dom";
+import routes from "routes";
 import { setAuthHeaders } from "src/apis/axios";
 import { useCreateSession } from "src/hooks/useSessions";
 import { setUserDataToStorage } from "utils/storage";
@@ -19,7 +20,7 @@ const useLogin = () => {
       const response = await createSession(payload);
       setUserDataToStorage(response?.data);
       setAuthHeaders();
-      history.push("/blogs");
+      history.push(routes.blogs.index);
     },
     [createSession, history]
   );

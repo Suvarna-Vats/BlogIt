@@ -1,0 +1,159 @@
+{
+  "common": {
+    "back": "Back",
+    "cancel": "Cancel",
+    "logout": "Logout",
+    "navigation": "Navigation",
+    "user": "User",
+    "somethingWentWrong": "Something went wrong!",
+    "allPosts": "All posts",
+    "draft": "Draft",
+    "published": "Published"
+  },
+  "pageNotFound": {
+    "title": "The page you're looking for can't be found",
+    "backToHome": "Back to home"
+  },
+  "auth": {
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password"
+    },
+    "placeholders": {
+      "nameExample": "Oliver Smith",
+      "emailExample": "oliver@example.com",
+      "enterPassword": "Enter password",
+      "createPassword": "Create a password",
+      "reEnterPassword": "Re-enter password"
+    },
+    "buttons": {
+      "signIn": "Sign in",
+      "signingIn": "Signing in...",
+      "createAccount": "Create account",
+      "creatingAccount": "Creating account..."
+    },
+    "login": {
+      "title": "Sign in",
+      "subtitle": "Welcome back. Please enter your credentials to continue.",
+      "newHere": "New here?",
+      "createAccount": "Create an account",
+      "helper": "Use your registered email and password to sign in."
+    },
+    "signup": {
+      "title": "Sign up",
+      "subtitle": "Create your account to start blogging.",
+      "alreadyHaveAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "helper": "By signing up, you’ll be able to create and manage blog posts."
+    },
+    "validation": {
+      "invalidEmail": "Please enter a valid email address.",
+      "emailRequired": "Email is required.",
+      "passwordRequired": "Password is required.",
+      "nameRequired": "Name is required.",
+      "passwordMin": "Password must be at least 6 characters.",
+      "passwordsMismatch": "Passwords do not match.",
+      "passwordConfirmationRequired": "Password confirmation is required."
+    }
+  },
+  "blogs": {
+    "title": "Blog posts",
+    "addNew": "Add new blog post",
+    "emptyTitle": "No blog posts yet",
+    "emptySubtitle": "Create your first blog idea to get started."
+  },
+  "blog": {
+    "draftAriaLabel": "Draft post",
+    "editAriaLabel": "Edit post",
+    "editTooltip": "Edit"
+  },
+  "postForm": {
+    "heading": {
+      "new": "New blog post",
+      "edit": "Edit blog post"
+    },
+    "fields": {
+      "title": "Title",
+      "categories": "Categories",
+      "description": "Description"
+    },
+    "placeholders": {
+      "title": "Enter title",
+      "categoriesLoading": "Loading categories...",
+      "categoriesSearch": "Search category",
+      "description": "Enter description"
+    },
+    "preview": {
+      "ariaPreviewPost": "Preview post",
+      "ariaBackToEdit": "Back to edit",
+      "tooltipPreview": "Preview",
+      "tooltipBackToEdit": "Back to edit"
+    },
+    "submit": {
+      "submitting": "Submitting...",
+      "publish": "Publish",
+      "saveAsDraft": "Save as draft",
+      "unpublish": "Unpublish",
+      "delete": "Delete"
+    },
+    "actions": {
+      "changeSaveActionAria": "Change save action",
+      "moreActionsAria": "More actions"
+    }
+  },
+  "categories": {
+    "sidebar": {
+      "ariaLabel": "Categories sidebar",
+      "title": "CATEGORIES",
+      "addAriaLabel": "Add category",
+      "closeAriaLabel": "Close categories sidebar",
+      "searchPlaceholder": "Search categories"
+    },
+    "modal": {
+      "title": "New category",
+      "fieldLabel": "Category title",
+      "placeholder": "Enter category title",
+      "add": "Add",
+      "adding": "Adding...",
+      "cancel": "Cancel"
+    }
+  },
+  "edit": {
+    "title": "Edit posts",
+    "drafts": "Drafts",
+    "published": "Published",
+    "table": {
+      "title": "Title",
+      "lastUpdated": "Last updated",
+      "action": "Action",
+      "empty": "No posts here yet."
+    }
+  },
+  "myBlogPosts": {
+    "title": "My blog posts",
+    "articlesCount": "{{count}} articles",
+    "empty": "No posts here yet.",
+    "table": {
+      "title": "TITLE",
+      "category": "CATEGORY",
+      "lastPublishedAt": "LAST PUBLISHED AT",
+      "status": "STATUS"
+    }
+  },
+  "sidebar": {
+    "ariaLabel": "Sidebar",
+    "expandAriaLabel": "Expand sidebar",
+    "collapseAriaLabel": "Collapse sidebar",
+    "primaryNavAriaLabel": "Primary",
+    "userMenuAriaLabel": "User menu",
+    "items": {
+      "blogs": "Blog posts",
+      "myBlogPosts": "My blog posts",
+      "editPosts": "Edit posts",
+      "categories": "Categories",
+      "newBlogPost": "New blog post"
+    }
+  }
+}

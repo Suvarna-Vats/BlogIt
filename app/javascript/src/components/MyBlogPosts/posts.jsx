@@ -1,11 +1,13 @@
 import React from "react";
 
 import { Spinner, Table, Typography } from "@bigbinary/neetoui";
+import { useTranslation } from "react-i18next";
 import useMyBlogPostsTableData from "src/hooks/useMyBlogPostsTableData";
 
 import { PAGE_SIZE } from "./constants";
 
 const Posts = ({ isLoading, posts = [], onReload }) => {
+  const { t } = useTranslation();
   const {
     pageNumber,
     setPageNumber,
@@ -27,7 +29,7 @@ const Posts = ({ isLoading, posts = [], onReload }) => {
     return (
       <section className="rounded-lg border border-gray-200 bg-white px-6 py-10">
         <Typography className="text-gray-600" style="body2">
-          No posts here yet.
+          {t("myBlogPosts.empty")}
         </Typography>
       </section>
     );

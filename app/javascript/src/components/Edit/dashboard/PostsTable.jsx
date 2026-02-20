@@ -2,13 +2,15 @@ import React, { useMemo } from "react";
 
 import { Edit } from "@bigbinary/neeto-icons";
 import { Button, Table, Typography } from "@bigbinary/neetoui";
+import { useTranslation } from "react-i18next";
 import { formatPostDate } from "src/components/utis";
 
 const PostsTable = ({ title, posts = [], onEdit }) => {
+  const { t } = useTranslation();
   const columnData = useMemo(
     () => [
       {
-        title: "Title",
+        title: t("edit.table.title"),
         dataIndex: "title",
         key: "title",
         render: (_title, post) => (
@@ -30,7 +32,7 @@ const PostsTable = ({ title, posts = [], onEdit }) => {
         ),
       },
       {
-        title: "Last updated",
+        title: t("edit.table.lastUpdated"),
         dataIndex: "updated_at",
         key: "updated_at",
         render: updatedAt => (
@@ -40,7 +42,7 @@ const PostsTable = ({ title, posts = [], onEdit }) => {
         ),
       },
       {
-        title: "Action",
+        title: t("edit.table.action"),
         key: "action",
         align: "right",
         render: (_value, post) => (
@@ -53,7 +55,7 @@ const PostsTable = ({ title, posts = [], onEdit }) => {
         ),
       },
     ],
-    [onEdit]
+    [onEdit, t]
   );
 
   return (
@@ -66,7 +68,7 @@ const PostsTable = ({ title, posts = [], onEdit }) => {
       {!posts.length ? (
         <div className="px-6 py-10">
           <Typography className="text-gray-600" style="body2">
-            No posts here yet.
+            {t("edit.table.empty")}
           </Typography>
         </div>
       ) : (

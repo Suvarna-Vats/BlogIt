@@ -1,21 +1,22 @@
 import React from "react";
 
 import { Button, Typography } from "@bigbinary/neetoui";
+import withT from "src/commons/withT";
 
 import Card from "./Card";
 
-const Posts = ({ posts = [], onAddNew }) => {
+const Posts = ({ posts = [], onAddNew, t }) => {
   if (!posts.length) {
     return (
       <div className="py-24">
         <Typography component="h2" style="h4" weight="semibold">
-          No blog posts yet
+          {t("blogs.emptyTitle")}
         </Typography>
         <Typography className="mt-2 text-gray-600" style="body2">
-          Create your first blog idea to get started.
+          {t("blogs.emptySubtitle")}
         </Typography>
         <div className="mt-6">
-          <Button label="Add new blog post" size="small" onClick={onAddNew} />
+          <Button label={t("blogs.addNew")} size="small" onClick={onAddNew} />
         </div>
       </div>
     );
@@ -30,4 +31,4 @@ const Posts = ({ posts = [], onAddNew }) => {
   );
 };
 
-export default Posts;
+export default withT(Posts);

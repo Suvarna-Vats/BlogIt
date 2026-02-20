@@ -2,10 +2,11 @@ import React from "react";
 
 import { Button, Input, Typography } from "@bigbinary/neetoui";
 import { Form, Formik } from "formik";
+import withT from "src/commons/withT";
 
 import { LOGIN_VALIDATION_SCHEMA } from "./validation";
 
-const LoginForm = ({ onSubmit }) => (
+const LoginForm = ({ onSubmit, t }) => (
   <Formik
     initialValues={{ email: "", password: "" }}
     validationSchema={LOGIN_VALIDATION_SCHEMA}
@@ -16,9 +17,9 @@ const LoginForm = ({ onSubmit }) => (
         <Input
           required
           error={touched.email && errors.email}
-          label="Email"
+          label={t("auth.fields.email")}
           name="email"
-          placeholder="oliver@example.com"
+          placeholder={t("auth.placeholders.emailExample")}
           value={values.email}
           onBlur={handleBlur}
           onChange={handleChange}
@@ -26,9 +27,9 @@ const LoginForm = ({ onSubmit }) => (
         <Input
           required
           error={touched.password && errors.password}
-          label="Password"
+          label={t("auth.fields.password")}
           name="password"
-          placeholder="Enter password"
+          placeholder={t("auth.placeholders.enterPassword")}
           type="password"
           value={values.password}
           onBlur={handleBlur}
@@ -36,17 +37,21 @@ const LoginForm = ({ onSubmit }) => (
         />
         <Button
           className="w-full cursor-pointer bg-black"
-          label={isSubmitting ? "Signing in..." : "Sign in"}
           loading={isSubmitting}
           size="large"
           type="submit"
+          label={
+            isSubmitting
+              ? t("auth.buttons.signingIn")
+              : t("auth.buttons.signIn")
+          }
         />
         <Typography className="text-center text-gray-500" style="nano">
-          Use your registered email and password to sign in.
+          {t("auth.login.helper")}
         </Typography>
       </Form>
     )}
   </Formik>
 );
 
-export default LoginForm;
+export default withT(LoginForm);

@@ -2,7 +2,9 @@ import React from "react";
 
 import { Spinner } from "@bigbinary/neetoui";
 import { BackButton, PostForm } from "components/commons";
+import { useTranslation } from "react-i18next";
 import { useHistory, useParams } from "react-router-dom";
+import routes from "routes";
 import Layout from "src/components/commons/Layout";
 import {
   useDestroyPost,
@@ -12,17 +14,18 @@ import {
 
 const EditPost = () => {
   const history = useHistory();
+  const { t } = useTranslation();
   const { slug } = useParams();
 
   const { data: { post = null } = {}, isLoading } = useFetchPost(slug, {
-    onError: () => history.push("/edit"),
+    onError: () => history.push(routes.edit.index),
   });
   const { mutateAsync: updatePost } = useUpdatePost();
   const { mutate: destroyPost } = useDestroyPost();
 
   const handleDelete = () => {
     destroyPost(slug);
-    history.push("/edit");
+    history.push(routes.edit.index);
   };
 
   if (isLoading) {
@@ -56,13 +59,13 @@ const EditPost = () => {
           <BackButton to={-1} />
         </div>
         <PostForm
-          heading="Edit blog post"
+          heading={t("postForm.heading.edit")}
           initialValues={initialFormValues}
           onCancel={() => history.goBack()}
           onDelete={handleDelete}
           onSubmit={async payload => {
             await updatePost({ slug, payload });
-            history.push(`/blogs/${slug}`);
+            history.push(routes.blogs.show(slug));
           }}
         />
       </div>

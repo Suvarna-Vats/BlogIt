@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "react-jsx",
     "baseUrl": "./app/javascript",
     "paths": {
       "src/*": ["src/*"],
@@ -7,6 +8,7 @@
       "common/*": ["src/common/*"],
       "components/*": ["src/components/*"],
       "neeto-ui/*": ["src/neeto-ui/*"],
+      "routes": ["src/routes.js"],
       "utils/*": ["src/utils/*"]
     }
   },

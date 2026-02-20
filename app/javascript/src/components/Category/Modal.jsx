@@ -1,9 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import { Button, Input, Modal } from "@bigbinary/neetoui";
+import classNames from "classnames";
 import { isEmpty, pipe, trim } from "ramda";
+import { useTranslation } from "react-i18next";
 
 const CreateCategoryModal = ({ isOpen, isSubmitting, onClose, onSubmit }) => {
+  const { t } = useTranslation();
   const [name, setName] = useState("");
 
   useEffect(() => {
@@ -25,13 +28,13 @@ const CreateCategoryModal = ({ isOpen, isSubmitting, onClose, onSubmit }) => {
 
   return (
     <Modal isOpen={isOpen} size="small" onClose={onClose}>
-      <Modal.Header title="New category" />
+      <Modal.Header title={t("categories.modal.title")} />
       <form onSubmit={handleSubmit}>
         <Modal.Body>
           <Input
             required
-            label="Category title"
-            placeholder="Enter category title"
+            label={t("categories.modal.fieldLabel")}
+            placeholder={t("categories.modal.placeholder")}
             value={name}
             onChange={event => setName(event.target.value)}
           />
@@ -40,13 +43,16 @@ const CreateCategoryModal = ({ isOpen, isSubmitting, onClose, onSubmit }) => {
           <Button
             className="cursor-pointer bg-black"
             disabled={!canSubmit}
-            label={isSubmitting ? "Adding..." : "Add"}
             loading={isSubmitting}
             size="small"
             type="submit"
+            label={classNames({
+              [t("categories.modal.adding")]: isSubmitting,
+              [t("categories.modal.add")]: !isSubmitting,
+            })}
           />
           <Button
-            label="Cancel"
+            label={t("categories.modal.cancel")}
             size="small"
             style="secondary"
             type="button"

@@ -1,6 +1,8 @@
 import React from "react";
 
 import { Input, Select, Textarea, Typography } from "@bigbinary/neetoui";
+import classNames from "classnames";
+import withT from "src/commons/withT";
 import {
   MAX_DESCRIPTION_LENGTH,
   MAX_TITLE_LENGTH,
@@ -15,13 +17,14 @@ const PostFormEdit = ({
   selectedCategories,
   handleCategoriesChange,
   isLoadingCategories,
+  t,
 }) => (
   <>
     <Input
       required
-      label="Title"
+      label={t("postForm.fields.title")}
       maxLength={MAX_TITLE_LENGTH}
-      placeholder="Enter title"
+      placeholder={t("postForm.placeholders.title")}
       value={title}
       onChange={event => setTitle(event.target.value)}
     />
@@ -29,20 +32,21 @@ const PostFormEdit = ({
       isMulti
       isSearchable
       required
-      label="Categories"
+      label={t("postForm.fields.categories")}
       options={categoryOptions}
       value={selectedCategories}
-      placeholder={
-        isLoadingCategories ? "Loading categories..." : "Search category"
-      }
+      placeholder={classNames({
+        [t("postForm.placeholders.categoriesLoading")]: isLoadingCategories,
+        [t("postForm.placeholders.categoriesSearch")]: !isLoadingCategories,
+      })}
       onChange={handleCategoriesChange}
     />
     <div>
       <Textarea
         required
-        label="Description"
+        label={t("postForm.fields.description")}
         maxLength={MAX_DESCRIPTION_LENGTH}
-        placeholder="Enter description"
+        placeholder={t("postForm.placeholders.description")}
         rows={10}
         value={description}
         onChange={event => setDescription(event.target.value)}
@@ -56,4 +60,4 @@ const PostFormEdit = ({
   </>
 );
 
-export default PostFormEdit;
+export default withT(PostFormEdit);

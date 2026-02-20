@@ -3,6 +3,7 @@ import React from "react";
 import { Close, Plus } from "@bigbinary/neeto-icons";
 import { Button, Input, Spinner, Typography } from "@bigbinary/neetoui";
 import classNames from "classnames";
+import withT from "src/commons/withT";
 
 const CategorySidebar = ({
   isOpen,
@@ -15,12 +16,13 @@ const CategorySidebar = ({
   onClose,
   onClearSelection,
   onSelectCategory,
+  t,
 }) => {
   if (!isOpen) return null;
 
   return (
     <aside
-      aria-label="Categories sidebar"
+      aria-label={t("categories.sidebar.ariaLabel")}
       className={classNames(
         "h-screen w-72 shrink-0 border-r bg-gray-50",
         "flex flex-col"
@@ -33,18 +35,18 @@ const CategorySidebar = ({
           style="nano"
           weight="semibold"
         >
-          CATEGORIES
+          {t("categories.sidebar.title")}
         </Typography>
         <div className="flex items-center gap-1">
           <Button
-            aria-label="Add category"
+            aria-label={t("categories.sidebar.addAriaLabel")}
             icon={Plus}
             size="small"
             style="text"
             onClick={onAddNew}
           />
           <Button
-            aria-label="Close categories sidebar"
+            aria-label={t("categories.sidebar.closeAriaLabel")}
             icon={Close}
             size="small"
             style="text"
@@ -54,7 +56,7 @@ const CategorySidebar = ({
       </div>
       <div className="px-4 pb-3">
         <Input
-          placeholder="Search categories"
+          placeholder={t("categories.sidebar.searchPlaceholder")}
           value={searchTerm}
           onChange={event => onSearchChange?.(event.target.value)}
         />
@@ -76,7 +78,7 @@ const CategorySidebar = ({
               )}
               onClick={onClearSelection}
             >
-              All posts
+              {t("common.allPosts")}
             </button>
             {categories.map(category => (
               <button
@@ -100,4 +102,4 @@ const CategorySidebar = ({
   );
 };
 
-export default CategorySidebar;
+export default withT(CategorySidebar);

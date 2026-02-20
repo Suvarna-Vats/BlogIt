@@ -4,6 +4,7 @@ import { Typography } from "@bigbinary/neetoui";
 import { formatPostDate, truncate } from "src/components/utis";
 import { is, isNil, reject } from "ramda";
 import { NavLink } from "react-router-dom";
+import routes from "routes";
 
 const Card = ({ post }) => {
   const {
@@ -22,7 +23,7 @@ const Card = ({ post }) => {
 
   return (
     <article className="py-6">
-      <NavLink to={`/blogs/${slug}`}>
+      <NavLink to={routes.blogs.show(slug)}>
         <Typography
           className="text-gray-900 hover:underline"
           component="h2"

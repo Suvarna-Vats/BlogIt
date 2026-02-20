@@ -2,11 +2,13 @@ import React from "react";
 
 import { LeftArrow, RightArrow } from "@bigbinary/neeto-icons";
 import { Button, Typography } from "@bigbinary/neetoui";
+import classNames from "classnames";
 import PostFormActions from "components/commons/actions";
 import Blog from "components/commons/Blog";
-import usePostForm from "components/commons/hooks/usePostForm";
+import { useTranslation } from "react-i18next";
+import usePostForm from "src/components/commons/PostForm/hooks/usePostForm";
 
-import PostFormDropdown from "./dropdown";
+import PostFormDropdown from "./Dropdown";
 import PostFormEdit from "./Edit";
 
 const PostForm = ({
@@ -17,6 +19,7 @@ const PostForm = ({
   onDelete,
   onChange,
 }) => {
+  const { t } = useTranslation();
   const {
     title,
     setTitle,
@@ -46,20 +49,29 @@ const PostForm = ({
           </Typography>
           <div className="flex items-center gap-3">
             <Button
-              aria-label={isPreview ? "Back to edit" : "Preview post"}
               className="rounded bg-white transition-colors hover:bg-gray-100"
               icon={isPreview ? LeftArrow : RightArrow}
               iconSize={20}
               size="small"
               style="text"
               type="button"
+              aria-label={classNames({
+                [t("postForm.preview.ariaBackToEdit")]: isPreview,
+                [t("postForm.preview.ariaPreviewPost")]: !isPreview,
+              })}
               tooltipProps={{
-                content: isPreview ? "Back to edit" : "Preview",
+                content: isPreview
+                  ? t("postForm.preview.tooltipBackToEdit")
+                  : t("postForm.preview.tooltipPreview"),
                 position: "bottom",
               }}
               onClick={togglePreview}
             />
-            <Button label="Cancel" style="secondary" onClick={onCancel} />
+            <Button
+              label={t("common.cancel")}
+              style="secondary"
+              onClick={onCancel}
+            />
             <PostFormDropdown
               isMenuDisabled={isSubmitting}
               isSubmitDisabled={!canSubmit}
