@@ -1,32 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Spinner } from "@bigbinary/neetoui";
 import Blog from "components/commons/Blog";
 import { useHistory, useParams } from "react-router-dom";
-import { fetchPost } from "src/apis/posts";
+import { useFetchPost } from "src/hooks/usePosts";
 
 const Show = () => {
   const history = useHistory();
   const { slug } = useParams();
 
-  const [post, setPost] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const loadPost = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetchPost(slug);
-        setPost(response?.data?.post || null);
-      } catch {
-        history.push("/blogs");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadPost();
-  }, [history, slug]);
+  const { data, isLoading } = useFetchPost(slug, {
+    onError: () => history.push("/blogs"),
+  });
+  const post = data?.data?.post ?? null;
 
   if (isLoading) {
     return (

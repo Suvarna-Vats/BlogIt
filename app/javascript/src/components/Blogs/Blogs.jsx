@@ -1,35 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Button, Spinner, Typography } from "@bigbinary/neetoui";
 import { useHistory } from "react-router-dom";
-import { fetchPosts } from "src/apis/posts";
 import { useCategoryContext } from "src/contexts/category";
+import { useFetchPosts } from "src/hooks/usePosts";
 
 import Posts from "./Posts";
 
 const Blogs = () => {
   const history = useHistory();
   const { selectedCategoryId } = useCategoryContext();
-  const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const loadPosts = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetchPosts(
-          selectedCategoryId ? { category_id: selectedCategoryId } : {}
-        );
-        setPosts(response?.data?.posts || []);
-      } catch {
-        setPosts([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadPosts();
-  }, [selectedCategoryId]);
+  const params = selectedCategoryId ? { category_id: selectedCategoryId } : {};
+  const { data, isLoading } = useFetchPosts(params);
+  const posts = data?.data?.posts ?? [];
 
   const handleAddNew = () => history.push("/blogs/new");
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import {
   filter,
@@ -12,8 +12,8 @@ import {
   toLower,
   trim,
 } from "ramda";
-import { createCategory, fetchCategories } from "src/apis/categories";
 import { useCategoryContext } from "src/contexts/category";
+import { useCreateCategory, useFetchCategories } from "src/hooks/useCategories";
 
 const useCategory = () => {
   const {
@@ -24,27 +24,12 @@ const useCategory = () => {
     clearSelectedCategory,
   } = useCategoryContext();
 
-  const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isCreating, setIsCreating] = useState(false);
-
-  const loadCategories = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetchCategories();
-      setCategories(response?.data?.categories ?? []);
-    } catch {
-      setCategories([]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isCategorySidebarOpen) loadCategories();
-  }, [isCategorySidebarOpen, loadCategories]);
+  const { data, isLoading } = useFetchCategories({
+    enabled: isCategorySidebarOpen,
+  });
+  const categories = data?.data?.categories ?? [];
 
   const filteredCategories = useMemo(() => {
     const normalizedNeedle = pipe(trim, toLower)(searchTerm);
@@ -64,18 +49,15 @@ const useCategory = () => {
   const openCreateModal = useCallback(() => setIsCreateModalOpen(true), []);
   const closeCreateModal = useCallback(() => setIsCreateModalOpen(false), []);
 
+  const { mutateAsync: createCategory, isLoading: isCreating } =
+    useCreateCategory();
+
   const handleCreateCategory = useCallback(
     async name => {
-      setIsCreating(true);
-      try {
-        await createCategory({ name });
-        closeCreateModal();
-        await loadCategories();
-      } finally {
-        setIsCreating(false);
-      }
+      await createCategory({ name });
+      closeCreateModal();
     },
-    [closeCreateModal, loadCategories]
+    [closeCreateModal, createCategory]
   );
 
   return {

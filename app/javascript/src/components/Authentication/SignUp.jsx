@@ -1,29 +1,15 @@
-import React, { useCallback } from "react";
+import React from "react";
 
 import { Typography, Button } from "@bigbinary/neetoui";
 import { Redirect, useHistory } from "react-router-dom";
-import { createUser } from "src/apis/users";
+import useSignUp from "src/components/Authentication/hooks/useSignUp";
 import { isLoggedIn } from "utils/auth";
 
 import { SignUpForm } from "./Form";
 
 const SignUp = () => {
   const history = useHistory();
-
-  const handleSubmit = useCallback(
-    async values => {
-      const payload = {
-        name: values.name?.trim(),
-        email: values.email?.trim(),
-        password: values.password,
-        password_confirmation: values.passwordConfirmation,
-      };
-
-      await createUser(payload);
-      history.push("/login");
-    },
-    [history]
-  );
+  const { handleSubmit } = useSignUp();
 
   if (isLoggedIn()) return <Redirect to="/blogs" />;
 

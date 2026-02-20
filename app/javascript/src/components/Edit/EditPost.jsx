@@ -1,33 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Spinner } from "@bigbinary/neetoui";
 import { BackButton, PostForm } from "components/commons";
 import { useHistory, useParams } from "react-router-dom";
-import { destroyPost, fetchPost, updatePost } from "src/apis/posts";
 import Layout from "src/commons/Layout";
+import {
+  useDestroyPost,
+  useFetchPost,
+  useUpdatePost,
+} from "src/hooks/usePosts";
 
 const EditPost = () => {
   const history = useHistory();
   const { slug } = useParams();
 
-  const [post, setPost] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data, isLoading } = useFetchPost(slug, {
+    onError: () => history.push("/edit"),
+  });
+  const post = data?.data?.post ?? null;
 
-  useEffect(() => {
-    const load = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetchPost(slug);
-        setPost(response?.data?.post || null);
-      } catch {
-        history.push("/edit");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    load();
-  }, [history, slug]);
+  const { mutateAsync: updatePost } = useUpdatePost();
+  const { mutateAsync: destroyPost } = useDestroyPost();
 
   const handleDelete = async () => {
     await destroyPost(slug);
@@ -70,7 +63,7 @@ const EditPost = () => {
           onCancel={() => history.goBack()}
           onDelete={handleDelete}
           onSubmit={async payload => {
-            await updatePost(slug, payload);
+            await updatePost({ slug, payload });
             history.push(`/blogs/${slug}`);
           }}
         />

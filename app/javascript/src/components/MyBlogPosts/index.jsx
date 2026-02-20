@@ -1,30 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 
 import { Typography } from "@bigbinary/neetoui";
-import { fetchMyPosts } from "src/apis/posts";
 import Layout from "src/commons/Layout";
+import { useFetchMyPosts } from "src/hooks/usePosts";
 
 import Posts from "./posts";
 
 const MyBlogPosts = () => {
-  const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const loadPosts = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetchMyPosts();
-      setPosts(response?.data?.posts || []);
-    } catch {
-      setPosts([]);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    loadPosts();
-  }, [loadPosts]);
+  const { data, isLoading, refetch } = useFetchMyPosts();
+  const posts = data?.data?.posts ?? [];
 
   return (
     <Layout>
@@ -37,7 +21,7 @@ const MyBlogPosts = () => {
             {posts.length} articles
           </Typography>
         </div>
-        <Posts isLoading={isLoading} posts={posts} onReload={loadPosts} />
+        <Posts isLoading={isLoading} posts={posts} onReload={refetch} />
       </div>
     </Layout>
   );

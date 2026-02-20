@@ -3,17 +3,24 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Tooltip, Typography } from "@bigbinary/neetoui";
 import PostActions from "components/commons/actions";
 import { NavLink } from "react-router-dom";
-import { destroyPost, updatePost } from "src/apis/posts";
 import {
   PAGE_SIZE,
   TITLE_TRUNCATE_LENGTH,
   DEFAULT_PAGE_NUMBER,
 } from "src/components/MyBlogPosts/constants";
 import { formatPostDateTime, truncate } from "src/components/utis";
+import { useDestroyPost, useUpdatePost } from "src/hooks/usePosts";
 
 const useMyBlogPostsTableData = ({ posts = [], onReload }) => {
   const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE_NUMBER);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const { mutate: updatePost } = useUpdatePost({
+    onSuccess: () => onReload?.(),
+  });
+
+  const { mutate: destroyPost } = useDestroyPost({
+    onSuccess: () => onReload?.(),
+  });
 
   useEffect(() => {
     setPageNumber(DEFAULT_PAGE_NUMBER);
@@ -100,19 +107,20 @@ const useMyBlogPostsTableData = ({ posts = [], onReload }) => {
         render: (_value, post) => (
           <PostActions
             status={post.status}
-            onChangeStatus={async nextStatus => {
-              await updatePost(post.slug, { status: nextStatus });
-              await onReload?.();
+            onChangeStatus={nextStatus => {
+              updatePost({
+                slug: post.slug,
+                payload: { status: nextStatus },
+              });
             }}
-            onDelete={async () => {
-              await destroyPost(post.slug);
-              await onReload?.();
+            onDelete={() => {
+              destroyPost(post.slug);
             }}
           />
         ),
       },
     ],
-    [onReload]
+    [destroyPost, updatePost]
   );
 
   return {

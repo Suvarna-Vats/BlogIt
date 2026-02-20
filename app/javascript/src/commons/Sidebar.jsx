@@ -5,7 +5,7 @@ import { Button, Typography } from "@bigbinary/neetoui";
 import classNames from "classnames";
 import { useHistory } from "react-router-dom";
 import { setAuthHeaders } from "src/apis/axios";
-import { destroySession } from "src/apis/sessions";
+import { useDestroySession } from "src/hooks/useSessions";
 import { getLoggedInUserName } from "utils/auth";
 import { setToLocalStorage } from "utils/storage";
 
@@ -19,6 +19,7 @@ const Sidebar = ({ items = DEFAULT_ITEMS }) => {
 
   const navItems = useMemo(() => items ?? DEFAULT_ITEMS, [items]);
   const [userName, setUserName] = useState(() => getLoggedInUserName());
+  const { mutateAsync: destroySession } = useDestroySession();
 
   useEffect(() => {
     const syncUserName = () => setUserName(getLoggedInUserName());

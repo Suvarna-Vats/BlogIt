@@ -1,38 +1,15 @@
-import React, { useCallback } from "react";
+import React from "react";
 
 import { Button, Typography } from "@bigbinary/neetoui";
 import { useHistory, Redirect } from "react-router-dom";
-import { setAuthHeaders } from "src/apis/axios";
-import { createSession } from "src/apis/sessions";
+import useLogin from "src/components/Authentication/hooks/useLogin";
 import { isLoggedIn } from "utils/auth";
-import { setToLocalStorage } from "utils/storage";
 
 import { LoginForm } from "./Form";
 
 const Login = () => {
   const history = useHistory();
-
-  const handleSubmit = useCallback(
-    async values => {
-      const payload = {
-        email: values.email?.trim(),
-        password: values.password,
-      };
-
-      const response = await createSession(payload);
-      const { authentication_token, email, id, name } = response?.data ?? {};
-
-      setToLocalStorage({
-        authToken: authentication_token,
-        email,
-        userId: id,
-        userName: name,
-      });
-      setAuthHeaders();
-      history.push("/blogs");
-    },
-    [history]
-  );
+  const { handleSubmit } = useLogin();
 
   if (isLoggedIn()) return <Redirect to="/blogs" />;
 

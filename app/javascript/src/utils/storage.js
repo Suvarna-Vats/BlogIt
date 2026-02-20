@@ -19,4 +19,15 @@ const setToLocalStorage = values => {
 const getFromLocalStorage = key =>
   localStorage.getItem(normalizeStorageKey(key));
 
-export { getFromLocalStorage, setToLocalStorage };
+const setUserDataToStorage = userData => {
+  const { authentication_token, email, id, name } = userData ?? {};
+
+  setToLocalStorage({
+    authToken: authentication_token,
+    email,
+    userId: id,
+    userName: name,
+  });
+};
+
+export { getFromLocalStorage, setToLocalStorage, setUserDataToStorage };

@@ -2,10 +2,11 @@ import React from "react";
 
 import { PostForm } from "components/commons";
 import { useHistory } from "react-router-dom";
-import { createPost } from "src/apis/posts";
+import { useCreatePost } from "src/hooks/usePosts";
 
 const New = () => {
   const history = useHistory();
+  const { mutateAsync: createPost } = useCreatePost();
 
   return (
     <PostForm
