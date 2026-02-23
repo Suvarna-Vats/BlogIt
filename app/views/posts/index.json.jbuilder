@@ -6,8 +6,6 @@ json.posts @posts do |post|
     :slug,
     :title,
     :description,
-    :is_bloggable,
-    :status,
     :last_published_at,
     :created_at,
     :updated_at

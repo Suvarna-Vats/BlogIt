@@ -19,9 +19,11 @@ class PostsController < ApplicationController
 
   def mine
     authorize Post, :mine?
-    @posts = current_user.posts
+    base_scope = current_user.posts
       .includes(:user, :categories)
       .order(updated_at: :desc)
+
+    @posts = FilterPostsService.new(params: filter_params, scope: base_scope).process!
   end
 
   def show
@@ -59,6 +61,14 @@ class PostsController < ApplicationController
         :title,
         :description,
         :status,
+        category_ids: []
+      )
+    end
+
+    def filter_params
+      params.permit(
+        :status,
+        :title,
         category_ids: []
       )
     end
