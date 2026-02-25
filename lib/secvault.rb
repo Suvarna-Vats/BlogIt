@@ -11,4 +11,3 @@ module Secvault
     @secrets ||= Secrets.new
   end
 end
-

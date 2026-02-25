@@ -18,4 +18,3 @@ class PostPdfExport < ApplicationRecord
       self.token ||= SecureRandom.urlsafe_base64(24)
     end
 end
-

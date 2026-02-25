@@ -1,5 +1,4 @@
 import { createConsumer } from "@rails/actioncable";
-
 import { getFromLocalStorage } from "utils/storage";
 
 const buildCableUrl = () => {
@@ -7,6 +6,7 @@ const buildCableUrl = () => {
   const token = getFromLocalStorage("authToken");
   const params = new URLSearchParams();
   if (email) params.set("email", email);
+
   if (token) params.set("token", token);
 
   const query = params.toString();
@@ -15,4 +15,3 @@ const buildCableUrl = () => {
 };
 
 export default createConsumer(buildCableUrl());
-

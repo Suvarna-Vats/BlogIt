@@ -24,7 +24,8 @@ const votePost = async (slug, value) =>
     },
   });
 
-const createPostPdfExport = async slug => axios.post(`/posts/${slug}/pdf_exports`);
+const createPostPdfExport = async slug =>
+  axios.post(`/posts/${slug}/pdf_exports`);
 
 const downloadPostPdfExport = async (slug, token) =>
   axios.get(`/posts/${slug}/pdf_exports/${token}`, {

@@ -29,4 +29,3 @@ class BackfillPostVoteCounters < ActiveRecord::Migration[8.0]
     # no-op
   end
 end
-

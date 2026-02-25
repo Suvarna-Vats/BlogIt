@@ -34,4 +34,3 @@ class Posts::BulksController < ApplicationController
       params.require(:post).permit(ids: [])
     end
 end
-

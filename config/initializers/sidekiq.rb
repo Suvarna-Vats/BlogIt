@@ -13,4 +13,3 @@ Sidekiq.configure_client do |config|
     size: Integer(ENV.fetch("SIDEKIQ_REDIS_POOL_SIZE", "2"))
   }
 end
-

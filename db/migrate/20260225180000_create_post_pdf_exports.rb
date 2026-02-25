@@ -18,4 +18,3 @@ class CreatePostPdfExports < ActiveRecord::Migration[8.0]
     add_index :post_pdf_exports, :token, unique: true
   end
 end
-

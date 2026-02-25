@@ -3,4 +3,3 @@
 WickedPdf.configure do |config|
   config.enable_local_file_access = true
 end
-

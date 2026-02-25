@@ -55,4 +55,3 @@ class PostPdfExportJob
     raise
   end
 end
-
