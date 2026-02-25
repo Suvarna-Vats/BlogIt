@@ -17,7 +17,9 @@ const alias = {
   apis: absolutePath("src/apis"),
   common: absolutePath("src/common"),
   components: absolutePath("src/components"),
+  constants: absolutePath("src/constants"),
   utils: absolutePath("src/utils"),
+  channels: absolutePath("src/channels"),
   "neeto-ui": absolutePath("src/neeto-ui"),
 };
 

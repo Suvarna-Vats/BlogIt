@@ -67,7 +67,16 @@
   "blog": {
     "draftAriaLabel": "Draft post",
     "editAriaLabel": "Edit post",
-    "editTooltip": "Edit"
+    "editTooltip": "Edit",
+    "downloadAriaLabel": "Download post as PDF",
+    "downloadLabel": "Download",
+    "downloadModal": {
+      "title": "Downloading blog post",
+      "body": "We’re generating a PDF. It will download automatically when it’s ready.",
+      "starting": "Starting...",
+      "generating": "Generating...",
+      "status": "Status: {{status}}"
+    }
   },
   "postForm": {
     "heading": {

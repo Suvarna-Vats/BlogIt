@@ -1,23 +1,18 @@
-const normalizeStorageKey = key => (key === "email" ? "authEmail" : key);
-
 const setToLocalStorage = values => {
   Object.entries(values).forEach(([key, value]) => {
-    const storageKey = normalizeStorageKey(key);
-
     if (value === null || value === undefined) {
-      localStorage.removeItem(storageKey);
+      localStorage.removeItem(key);
       if (key === "email") localStorage.removeItem("email");
 
       return;
     }
 
-    localStorage.setItem(storageKey, String(value));
+    localStorage.setItem(key, String(value));
     if (key === "email") localStorage.setItem("email", String(value));
   });
 };
 
-const getFromLocalStorage = key =>
-  localStorage.getItem(normalizeStorageKey(key));
+const getFromLocalStorage = key => localStorage.getItem(key);
 
 const setUserDataToStorage = userData => {
   const { authentication_token, email, id, name } = userData ?? {};

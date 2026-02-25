@@ -24,6 +24,13 @@ const votePost = async (slug, value) =>
     },
   });
 
+const createPostPdfExport = async slug => axios.post(`/posts/${slug}/pdf_exports`);
+
+const downloadPostPdfExport = async (slug, token) =>
+  axios.get(`/posts/${slug}/pdf_exports/${token}`, {
+    responseType: "blob",
+  });
+
 const bulkUpdatePosts = async payload =>
   axios.put("/posts/bulk", {
     post: payload,
@@ -42,6 +49,8 @@ export {
   bulkDestroyPosts,
   bulkUpdatePosts,
   createPost,
+  createPostPdfExport,
+  downloadPostPdfExport,
   destroyPost,
   fetchMyPosts,
   fetchPost,

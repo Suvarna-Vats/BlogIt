@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         get :mine
       end
       resource :vote, only: [ :update ], module: :posts
+      resources :pdf_exports, only: %i[create show], module: :posts, param: :token
     end
     resources :categories, only: [ :index, :create ]
     resources :users, only: [ :create ]

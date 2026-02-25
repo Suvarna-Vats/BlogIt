@@ -1,0 +1,29 @@
+<% author = @post.user&.name.presence || @post.user&.email %>
+<% published_at = @post.updated_at&.strftime("%d %b %Y") %>
+
+<h1 class="title"><%= @post.title %></h1>
+
+<div class="meta muted">
+  <% if author.present? %>
+    <span><%= author %></span>
+  <% end %>
+  <% if author.present? && published_at.present? %>
+    <span> • </span>
+  <% end %>
+  <% if published_at.present? %>
+    <span><%= published_at %></span>
+  <% end %>
+</div>
+
+<% if @post.categories.present? %>
+  <div style="margin-top: 14px;">
+    <% @post.categories.each do |category| %>
+      <span class="tag"><%= category.name %></span>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="content">
+  <%= @post.description %>
+</div>
+

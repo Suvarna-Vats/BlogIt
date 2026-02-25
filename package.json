@@ -57,6 +57,7 @@
     "@emotion/is-prop-valid": "1.2.0",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.23",
+    "@rails/actioncable": "^8.0.0",
     "@rollup/pluginutils": "^5.1.4",
     "@svgr/plugin-svgo": "^8.1.0",
     "antd": "4.24.3",
