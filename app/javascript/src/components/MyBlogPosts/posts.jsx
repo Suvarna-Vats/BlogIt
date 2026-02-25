@@ -1,21 +1,23 @@
 import React from "react";
 
-import { Spinner, Table, Typography } from "@bigbinary/neetoui";
+import { Pagination, Spinner, Table, Typography } from "@bigbinary/neetoui";
 import { useTranslation } from "react-i18next";
 import useMyBlogPostsTableData from "src/hooks/useMyBlogPostsTableData";
 
 import { PAGE_SIZE } from "./constants";
 
-const Posts = ({ isLoading, posts = [], onReload }) => {
+const Posts = ({
+  isLoading,
+  posts = [],
+  totalCount = 0,
+  pageNumber,
+  onPageChange,
+  onReload,
+  visibleColumnKeys,
+}) => {
   const { t } = useTranslation();
-  const {
-    pageNumber,
-    setPageNumber,
-    selectedRowKeys,
-    setSelectedRowKeys,
-    pagePosts,
-    columnData,
-  } = useMyBlogPostsTableData({ posts, onReload });
+  const { selectedRowKeys, setSelectedRowKeys, columnData } =
+    useMyBlogPostsTableData({ posts, onReload, visibleColumnKeys });
 
   if (isLoading) {
     return (
@@ -40,22 +42,24 @@ const Posts = ({ isLoading, posts = [], onReload }) => {
       <div className="overflow-x-auto">
         <Table
           columnData={columnData}
-          currentPageNumber={pageNumber}
-          defaultPageSize={PAGE_SIZE}
-          handlePageChange={setPageNumber}
-          rowData={pagePosts}
+          rowData={posts}
           rowKey={post => post.id ?? post.slug}
-          totalCount={posts.length}
-          paginationProps={{
-            position: ["bottomRight"],
-            showSizeChanger: false,
-          }}
           rowSelection={{
             selectedRowKeys,
             onChange: keys => setSelectedRowKeys(keys),
           }}
         />
       </div>
+      {totalCount > PAGE_SIZE && (
+        <div className="flex justify-end border-t border-gray-200 px-6 py-4">
+          <Pagination
+            count={totalCount}
+            navigate={onPageChange}
+            pageNo={pageNumber}
+            pageSize={PAGE_SIZE}
+          />
+        </div>
+      )}
     </section>
   );
 };

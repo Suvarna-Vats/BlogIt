@@ -1,11 +1,19 @@
 import React from "react";
 
-import { Button, Typography } from "@bigbinary/neetoui";
+import { Button, Pagination, Typography } from "@bigbinary/neetoui";
 import withT from "src/commons/withT";
 
 import Card from "./Card";
 
-const Posts = ({ posts = [], onAddNew, t }) => {
+const Posts = ({
+  onAddNew,
+  onPageChange,
+  pageNumber,
+  pageSize,
+  posts = [],
+  t,
+  totalCount = 0,
+}) => {
   if (!posts.length) {
     return (
       <div className="py-24">
@@ -23,11 +31,23 @@ const Posts = ({ posts = [], onAddNew, t }) => {
   }
 
   return (
-    <div className="divide-y divide-gray-200">
-      {posts.map(post => (
-        <Card key={post.id} {...{ post }} />
-      ))}
-    </div>
+    <section className="rounded-lg border border-gray-200 bg-white p-4">
+      <div className="divide-y divide-gray-200">
+        {posts.map(post => (
+          <Card key={post.id} {...{ post }} />
+        ))}
+      </div>
+      {totalCount > pageSize && (
+        <div className="flex justify-end border-t border-gray-200 px-6 py-4">
+          <Pagination
+            count={totalCount}
+            navigate={onPageChange}
+            pageNo={pageNumber}
+            pageSize={pageSize}
+          />
+        </div>
+      )}
+    </section>
   );
 };
 

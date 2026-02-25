@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
+  include Pagy::Method
 
   protect_from_forgery
   before_action :authenticate_user_using_x_auth_token, if: :json_request?

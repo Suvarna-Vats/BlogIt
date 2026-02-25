@@ -5,17 +5,16 @@ import PostActions from "components/commons/actions";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import routes from "routes";
-import {
-  PAGE_SIZE,
-  TITLE_TRUNCATE_LENGTH,
-  DEFAULT_PAGE_NUMBER,
-} from "src/components/MyBlogPosts/constants";
+import { TITLE_TRUNCATE_LENGTH } from "src/components/MyBlogPosts/constants";
 import { formatPostDateTime, truncate } from "src/components/utis";
 import { useDestroyPost, useUpdatePost } from "src/hooks/usePosts";
 
-const useMyBlogPostsTableData = ({ posts = [], onReload }) => {
+const useMyBlogPostsTableData = ({
+  posts = [],
+  onReload,
+  visibleColumnKeys = [],
+}) => {
   const { t } = useTranslation();
-  const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE_NUMBER);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const { mutate: updatePost } = useUpdatePost({
     onSuccess: () => onReload?.(),
@@ -26,18 +25,11 @@ const useMyBlogPostsTableData = ({ posts = [], onReload }) => {
   });
 
   useEffect(() => {
-    setPageNumber(DEFAULT_PAGE_NUMBER);
     setSelectedRowKeys([]);
   }, [posts]);
 
-  const pagePosts = useMemo(() => {
-    const startIndex = (pageNumber - 1) * PAGE_SIZE;
-
-    return posts.slice(startIndex, startIndex + PAGE_SIZE);
-  }, [pageNumber, posts]);
-
-  const columnData = useMemo(
-    () => [
+  const columnData = useMemo(() => {
+    const allColumns = [
       {
         title: t("myBlogPosts.table.title"),
         dataIndex: "title",
@@ -122,16 +114,18 @@ const useMyBlogPostsTableData = ({ posts = [], onReload }) => {
           />
         ),
       },
-    ],
-    [destroyPost, t, updatePost]
-  );
+    ];
+
+    const safeVisibleKeys = new Set([...(visibleColumnKeys ?? []), "title"]);
+
+    return allColumns.filter(
+      column => column.key === "actions" || safeVisibleKeys.has(column.key)
+    );
+  }, [destroyPost, t, updatePost, visibleColumnKeys]);
 
   return {
-    pageNumber,
-    setPageNumber,
     selectedRowKeys,
     setSelectedRowKeys,
-    pagePosts,
     columnData,
   };
 };

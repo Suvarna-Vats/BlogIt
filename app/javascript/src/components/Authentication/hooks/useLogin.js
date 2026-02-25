@@ -18,7 +18,7 @@ const useLogin = () => {
       };
 
       const response = await createSession(payload);
-      setUserDataToStorage(response?.data);
+      setUserDataToStorage(response);
       setAuthHeaders();
       history.push(routes.blogs.index);
     },

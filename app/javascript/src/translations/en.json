@@ -134,6 +134,7 @@
   "myBlogPosts": {
     "title": "My blog posts",
     "articlesCount": "{{count}} articles",
+    "resultsForTitle": "{{count}} results for “{{title}}”",
     "empty": "No posts here yet.",
     "table": {
       "title": "TITLE",

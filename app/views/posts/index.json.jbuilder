@@ -23,3 +23,10 @@ json.posts @posts do |post|
       :name
   end
 end
+
+json.pagination do
+  json.total_count @pagy.count
+  json.page @pagy.page
+  json.page_size @pagy.limit
+  json.total_pages @pagy.pages
+end

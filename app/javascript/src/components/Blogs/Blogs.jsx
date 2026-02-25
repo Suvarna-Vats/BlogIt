@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { Button, Spinner, Typography } from "@bigbinary/neetoui";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import routes from "routes";
+import { DEFAULT_PAGE_NUMBER, PAGE_SIZE } from "src/components/constants";
 import { useCategoryContext } from "src/contexts/category";
 import { useFetchPosts } from "src/hooks/usePosts";
 
@@ -13,8 +14,25 @@ const Blogs = () => {
   const history = useHistory();
   const { t } = useTranslation();
   const { selectedCategoryId } = useCategoryContext();
-  const params = selectedCategoryId ? { category_id: selectedCategoryId } : {};
-  const { data: { posts = [] } = {}, isLoading } = useFetchPosts(params);
+  const [pageNumber, setPageNumber] = useState(DEFAULT_PAGE_NUMBER);
+
+  useEffect(() => {
+    setPageNumber(DEFAULT_PAGE_NUMBER);
+  }, [selectedCategoryId]);
+
+  const params = useMemo(
+    () => ({
+      page: pageNumber,
+      page_size: PAGE_SIZE,
+      ...(selectedCategoryId ? { category_id: selectedCategoryId } : {}),
+    }),
+    [pageNumber, selectedCategoryId]
+  );
+
+  const { data: { posts = [], pagination = {} } = {}, isLoading } =
+    useFetchPosts(params);
+
+  const totalCount = pagination.total_count ?? posts.length;
 
   const handleAddNew = () => history.push(routes.blogs.new);
 
@@ -36,7 +54,14 @@ const Blogs = () => {
           <Spinner />
         </div>
       ) : (
-        <Posts posts={posts} onAddNew={handleAddNew} />
+        <Posts
+          pageNumber={pageNumber}
+          pageSize={PAGE_SIZE}
+          posts={posts}
+          totalCount={totalCount}
+          onAddNew={handleAddNew}
+          onPageChange={setPageNumber}
+        />
       )}
     </>
   );

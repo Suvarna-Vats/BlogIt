@@ -25,10 +25,10 @@ const useFetchPost = (slug, options = {}) =>
     ...options,
   });
 
-const useFetchMyPosts = (options = {}) =>
+const useFetchMyPosts = (params = {}, options = {}) =>
   useQuery({
-    queryKey: [QUERY_KEYS.MY_POSTS],
-    queryFn: () => fetchMyPosts(),
+    queryKey: [QUERY_KEYS.MY_POSTS, params],
+    queryFn: () => fetchMyPosts(params),
     ...options,
   });
 

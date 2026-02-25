@@ -7,11 +7,11 @@ class FilterPostsService
   end
 
   def process!
-    scope = @scope
-    scope = with_all_categories(scope)
-    scope = with_status(scope)
-    scope = with_title(scope)
-    scope
+    filtered = @scope
+    filtered = with_all_categories(filtered)
+    filtered = with_status(filtered)
+    filtered = with_title(filtered)
+    filtered
   end
 
   private
@@ -55,6 +55,6 @@ class FilterPostsService
       return scope if title.blank?
 
       pattern = "%#{ActiveRecord::Base.sanitize_sql_like(title)}%"
-      scope.where("posts.title ILIKE ?", pattern)
+      scope.where("LOWER(posts.title) LIKE LOWER(?)", pattern)
     end
 end
