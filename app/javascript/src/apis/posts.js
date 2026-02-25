@@ -17,6 +17,13 @@ const updatePost = async (slug, payload) =>
 
 const destroyPost = async slug => axios.delete(`/posts/${slug}`);
 
+const votePost = async (slug, value) =>
+  axios.put(`/posts/${slug}/vote`, {
+    vote: {
+      value,
+    },
+  });
+
 const bulkUpdatePosts = async payload =>
   axios.put("/posts/bulk", {
     post: payload,
@@ -40,4 +47,5 @@ export {
   fetchPost,
   fetchPosts,
   updatePost,
+  votePost,
 };

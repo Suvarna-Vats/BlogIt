@@ -7,6 +7,7 @@ class Post < ApplicationRecord
   belongs_to :user
   belongs_to :organization
   has_and_belongs_to_many :categories
+  has_many :votes, dependent: :destroy
 
   validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }
   validates :description, presence: true, length: { maximum: MAX_DESCRIPTION_LENGTH }
@@ -16,6 +17,14 @@ class Post < ApplicationRecord
   before_validation :set_organization_id
   before_save :set_last_published_at, if: :should_set_last_published_at?
   before_create :set_slug
+
+  def self.bloggable_threshold
+    Integer(Rails.configuration.x.bloggable_threshold, exception: false) || 0
+  end
+
+  def net_votes
+    (upvotes || 0) - (downvotes || 0)
+  end
 
   private
 

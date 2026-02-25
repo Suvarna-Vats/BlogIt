@@ -26,6 +26,7 @@ const Blog = ({
   updated_at,
   user,
   slug,
+  is_bloggable: isBloggable = false,
   isPreview = false,
 }) => {
   const history = useHistory();
@@ -63,6 +64,9 @@ const Blog = ({
           <Typography component="h1" style="h2" weight="bold">
             {title}
           </Typography>
+          {isBloggable && (
+            <Tag label="Blog it" size="small" style="success" type="outline" />
+          )}
           {isDraft && (
             <span
               aria-label={t("blog.draftAriaLabel")}

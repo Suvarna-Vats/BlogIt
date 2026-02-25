@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         resource :bulk, only: %i[update destroy], module: :posts
         get :mine
       end
+      resource :vote, only: [ :update ], module: :posts
     end
     resources :categories, only: [ :index, :create ]
     resources :users, only: [ :create ]

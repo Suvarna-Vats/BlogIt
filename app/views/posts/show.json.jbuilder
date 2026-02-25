@@ -6,11 +6,16 @@ json.post do
     :slug,
     :title,
     :description,
+    :upvotes,
+    :downvotes,
     :is_bloggable,
     :status,
     :last_published_at,
     :created_at,
     :updated_at
+
+  json.net_votes @post.net_votes
+  json.my_vote @my_vote
 
   json.user do
     json.extract! @post.user,

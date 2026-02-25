@@ -8,6 +8,7 @@ import {
   fetchPost,
   fetchPosts,
   updatePost,
+  votePost,
 } from "src/apis/posts";
 import { QUERY_KEYS } from "src/constants/query";
 
@@ -108,6 +109,21 @@ const useBulkDestroyPosts = (options = {}) => {
   });
 };
 
+const useVotePost = (options = {}) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ slug, value }) => votePost(slug, value),
+    onSuccess: async (...args) => {
+      await queryClient.invalidateQueries([QUERY_KEYS.POSTS]);
+      await queryClient.invalidateQueries([QUERY_KEYS.MY_POSTS]);
+      await queryClient.invalidateQueries([QUERY_KEYS.POST]);
+      options.onSuccess?.(...args);
+    },
+    ...options,
+  });
+};
+
 export {
   useCreatePost,
   useBulkDestroyPosts,
@@ -117,4 +133,5 @@ export {
   useFetchPost,
   useFetchPosts,
   useUpdatePost,
+  useVotePost,
 };

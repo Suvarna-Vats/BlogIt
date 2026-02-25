@@ -26,6 +26,8 @@ class PostsController < ApplicationController
       page: normalized_page(params[:page]),
       limit: normalized_page_size(params[:page_size])
     )
+
+    @my_votes_by_post_id = my_votes_by_post_id_for(@posts)
   end
 
   def mine
@@ -41,10 +43,14 @@ class PostsController < ApplicationController
       page: normalized_page(filter_params[:page]),
       limit: normalized_page_size(filter_params[:page_size])
     )
+
+    @my_votes_by_post_id = my_votes_by_post_id_for(@posts)
   end
 
   def show
     authorize @post
+    kind = Vote.where(user_id: current_user.id, post_id: @post.id).pick(:kind)
+    @my_vote = kind
   end
 
   def create
@@ -96,6 +102,16 @@ class PostsController < ApplicationController
       @post = Post
         .includes(:user, :organization, :categories)
         .find_by!(slug: params[:slug], organization_id: current_user.organization_id)
+    end
+
+    def my_votes_by_post_id_for(posts)
+      post_ids = Array(posts).map(&:id).compact
+      return {} if post_ids.empty?
+
+      Vote
+        .where(user_id: current_user.id, post_id: post_ids)
+        .pluck(:post_id, :kind)
+        .to_h
     end
 
     def normalized_page(value)
