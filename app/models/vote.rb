@@ -43,12 +43,10 @@ class Vote < ApplicationRecord
       return if post_record.blank?
 
       post_record.with_lock do
-        upvote_value = Vote.kinds.fetch("upvote")
-        downvote_value = Vote.kinds.fetch("downvote")
         counts_by_kind = Vote.where(post_id: target_post_id).group(:kind).count
 
-        upvotes = counts_by_kind[upvote_value].to_i
-        downvotes = counts_by_kind[downvote_value].to_i
+        upvotes = counts_by_kind["upvote"].to_i
+        downvotes = counts_by_kind["downvote"].to_i
         threshold = Post.bloggable_threshold
         is_bloggable = (upvotes - downvotes) > threshold
 
@@ -56,4 +54,3 @@ class Vote < ApplicationRecord
       end
     end
 end
-

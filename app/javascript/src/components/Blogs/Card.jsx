@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { Tag, Typography } from "@bigbinary/neetoui";
+import classNames from "classnames";
 import { is, isNil, reject } from "ramda";
 import { NavLink } from "react-router-dom";
 import routes from "routes";
@@ -100,21 +101,23 @@ const Card = ({ post }) => {
             aria-label="Upvote"
             disabled={isVoting}
             type="button"
-            className={
-              myVote === 1
-                ? "rounded bg-green-50 px-2 py-1 font-semibold text-green-700 ring-1 ring-inset ring-green-600/20 transition-colors hover:bg-green-100 disabled:cursor-not-allowed disabled:opacity-50"
-                : "rounded px-2 py-1 text-gray-700 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
-            }
+            className={classNames(
+              "rounded px-2 py-1 transition-colors disabled:cursor-not-allowed disabled:opacity-50",
+              {
+                "bg-green-50 font-semibold text-green-700 ring-1 ring-inset ring-green-600/20 hover:bg-green-100":
+                  myVote === "upvote",
+                "text-gray-700 hover:bg-gray-100": myVote !== "upvote",
+              }
+            )}
             onClick={() => handleVote(1)}
           >
             ↑
           </button>
           <span
-            className={
-              netVotes >= 0
-                ? "text-sm font-semibold text-green-700"
-                : "text-sm font-semibold text-rose-700"
-            }
+            className={classNames("text-sm font-semibold", {
+              "text-green-700": netVotes >= 0,
+              "text-rose-700": netVotes < 0,
+            })}
           >
             {netVotes}
           </span>
@@ -122,11 +125,14 @@ const Card = ({ post }) => {
             aria-label="Downvote"
             disabled={isVoting}
             type="button"
-            className={
-              myVote === -1
-                ? "rounded bg-rose-50 px-2 py-1 font-semibold text-rose-700 ring-1 ring-inset ring-rose-600/20 transition-colors hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-50"
-                : "rounded px-2 py-1 text-gray-700 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
-            }
+            className={classNames(
+              "rounded px-2 py-1 transition-colors disabled:cursor-not-allowed disabled:opacity-50",
+              {
+                "bg-rose-50 font-semibold text-rose-700 ring-1 ring-inset ring-rose-600/20 hover:bg-rose-100":
+                  myVote === "downvote",
+                "text-gray-700 hover:bg-gray-100": myVote !== "downvote",
+              }
+            )}
             onClick={() => handleVote(-1)}
           >
             ↓

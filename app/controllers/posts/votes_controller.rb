@@ -26,7 +26,7 @@ class Posts::VotesController < ApplicationController
         downvotes: @post.downvotes,
         net_votes: @post.net_votes,
         is_bloggable: @post.is_bloggable,
-        my_vote: vote.kind_before_type_cast
+        my_vote: vote.kind
       }
     )
   end
