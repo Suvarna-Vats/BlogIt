@@ -3,6 +3,7 @@ import React from "react";
 import { Pagination, Spinner, Table, Typography } from "@bigbinary/neetoui";
 import { useTranslation } from "react-i18next";
 import useMyBlogPostsTableData from "src/hooks/useMyBlogPostsTableData";
+import useMyBlogPostsTableSelection from "src/hooks/useMyBlogPostsTableSelection";
 
 import { PAGE_SIZE } from "./constants";
 
@@ -14,10 +15,20 @@ const Posts = ({
   onPageChange,
   onReload,
   visibleColumnKeys,
+  queryParams = {},
 }) => {
   const { t } = useTranslation();
-  const { selectedRowKeys, setSelectedRowKeys, columnData } =
-    useMyBlogPostsTableData({ posts, onReload, visibleColumnKeys });
+  const { columnData } = useMyBlogPostsTableData({
+    onReload,
+    visibleColumnKeys,
+  });
+
+  const { bulkSelectAllRowsProps, isSelectingAll, onRowSelect, selectedRowKeys } =
+    useMyBlogPostsTableSelection({
+      posts,
+      queryParams,
+      totalCount,
+    });
 
   if (isLoading) {
     return (
@@ -41,13 +52,14 @@ const Posts = ({
     <section className="rounded-lg border border-gray-200 bg-white">
       <div className="overflow-x-auto">
         <Table
+          rowSelection
+          bulkSelectAllRowsProps={bulkSelectAllRowsProps}
           columnData={columnData}
+          loading={isSelectingAll}
           rowData={posts}
-          rowKey={post => post.id ?? post.slug}
-          rowSelection={{
-            selectedRowKeys,
-            onChange: keys => setSelectedRowKeys(keys),
-          }}
+          rowKey={post => post.id}
+          selectedRowKeys={selectedRowKeys}
+          onRowSelect={onRowSelect}
         />
       </div>
       {totalCount > PAGE_SIZE && (

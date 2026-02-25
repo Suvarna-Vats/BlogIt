@@ -71,6 +71,41 @@ class PostsController < ApplicationController
     render_notice(t("successfully_deleted"))
   end
 
+  def bulk_update
+    authorize Post, :bulk_update?
+
+    ids = normalized_ids(bulk_update_params[:ids])
+    status = bulk_update_params[:status].to_s
+
+    return render_error("Ids can't be blank", :unprocessable_entity) if ids.empty?
+    return render_error("Invalid status", :unprocessable_entity) unless Post.statuses.key?(status)
+
+    scope = current_user.posts.where(id: ids)
+    now = Time.current
+
+    if status == "published"
+      scope.where(status: "draft").update_all(
+        status: "published",
+        last_published_at: now,
+        updated_at: now
+      )
+    else
+      scope.where.not(status: status).update_all(status:, updated_at: now)
+    end
+
+    render_notice(t("successfully_updated"))
+  end
+
+  def bulk_destroy
+    authorize Post, :bulk_destroy?
+
+    ids = normalized_ids(bulk_destroy_params[:ids])
+    return render_error("Ids can't be blank", :unprocessable_entity) if ids.empty?
+
+    current_user.posts.where(id: ids).destroy_all
+    render_notice(t("successfully_deleted"))
+  end
+
   private
 
     def post_params
@@ -82,6 +117,14 @@ class PostsController < ApplicationController
       )
     end
 
+    def bulk_update_params
+      params.require(:post).permit(:status, ids: [])
+    end
+
+    def bulk_destroy_params
+      params.require(:post).permit(ids: [])
+    end
+
     def filter_params
       params.permit(
         :page,
@@ -90,6 +133,14 @@ class PostsController < ApplicationController
         :title,
         category_ids: []
       )
+    end
+
+    def normalized_ids(values)
+      Array(values).filter_map do |value|
+        Integer(value, 10)
+      rescue ArgumentError, TypeError
+        nil
+      end.uniq
     end
 
     def set_post

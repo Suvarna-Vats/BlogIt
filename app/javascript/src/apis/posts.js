@@ -17,7 +17,23 @@ const updatePost = async (slug, payload) =>
 
 const destroyPost = async slug => axios.delete(`/posts/${slug}`);
 
+const bulkUpdatePosts = async payload =>
+  axios.put("/posts/bulk", {
+    post: payload,
+  });
+
+const bulkDestroyPosts = async ids =>
+  axios.delete("/posts/bulk", {
+    data: {
+      post: {
+        ids,
+      },
+    },
+  });
+
 export {
+  bulkDestroyPosts,
+  bulkUpdatePosts,
   createPost,
   destroyPost,
   fetchMyPosts,

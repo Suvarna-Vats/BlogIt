@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 
 import { Tooltip, Typography } from "@bigbinary/neetoui";
 import PostActions from "components/commons/actions";
@@ -9,13 +9,8 @@ import { TITLE_TRUNCATE_LENGTH } from "src/components/MyBlogPosts/constants";
 import { formatPostDateTime, truncate } from "src/components/utis";
 import { useDestroyPost, useUpdatePost } from "src/hooks/usePosts";
 
-const useMyBlogPostsTableData = ({
-  posts = [],
-  onReload,
-  visibleColumnKeys = [],
-}) => {
+const useMyBlogPostsTableData = ({ onReload, visibleColumnKeys = [] }) => {
   const { t } = useTranslation();
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const { mutate: updatePost } = useUpdatePost({
     onSuccess: () => onReload?.(),
   });
@@ -23,10 +18,6 @@ const useMyBlogPostsTableData = ({
   const { mutate: destroyPost } = useDestroyPost({
     onSuccess: () => onReload?.(),
   });
-
-  useEffect(() => {
-    setSelectedRowKeys([]);
-  }, [posts]);
 
   const columnData = useMemo(() => {
     const allColumns = [
@@ -124,8 +115,6 @@ const useMyBlogPostsTableData = ({
   }, [destroyPost, t, updatePost, visibleColumnKeys]);
 
   return {
-    selectedRowKeys,
-    setSelectedRowKeys,
     columnData,
   };
 };

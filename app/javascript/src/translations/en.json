@@ -141,6 +141,29 @@
       "category": "CATEGORY",
       "lastPublishedAt": "LAST PUBLISHED AT",
       "status": "STATUS"
+    },
+    "tableSelection": {
+      "selectAll": "Select all {{count}} posts",
+      "allOnPageSelected": "All {{count}} posts on this page are selected"
+    },
+    "bulk": {
+      "selectedCount": "{{selected}} posts selected of {{totalCount}}",
+      "changeStatus": {
+        "label": "Change status",
+        "modal": {
+          "title": "Change status",
+          "body": "Are you sure you want to change the status of {{selected}} posts to {{status}}?",
+          "confirm": "Change status"
+        }
+      },
+      "delete": {
+        "label": "Delete",
+        "modal": {
+          "title": "Delete posts",
+          "body": "Are you sure you want to delete {{selected}} selected posts? This action cannot be undone.",
+          "confirm": "Delete posts"
+        }
+      }
     }
   },
   "sidebar": {

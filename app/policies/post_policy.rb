@@ -25,6 +25,14 @@ class PostPolicy
     update?
   end
 
+  def bulk_update?
+    true
+  end
+
+  def bulk_destroy?
+    true
+  end
+
   def mine?
     true
   end

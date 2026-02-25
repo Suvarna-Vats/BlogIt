@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   constraints(lambda { |req| req.format == :json }) do
     resources :posts, only: [ :index, :show, :create, :update, :destroy ], param: :slug do
       collection do
+        put :bulk, action: :bulk_update
+        delete :bulk, action: :bulk_destroy
         get :mine
       end
     end

@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
+  bulkDestroyPosts,
+  bulkUpdatePosts,
   createPost,
   destroyPost,
   fetchMyPosts,
@@ -76,8 +78,40 @@ const useDestroyPost = (options = {}) => {
   });
 };
 
+const useBulkUpdatePosts = (options = {}) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: payload => bulkUpdatePosts(payload),
+    onSuccess: async (...args) => {
+      await queryClient.invalidateQueries([QUERY_KEYS.POSTS]);
+      await queryClient.invalidateQueries([QUERY_KEYS.MY_POSTS]);
+      await queryClient.invalidateQueries([QUERY_KEYS.POST]);
+      options.onSuccess?.(...args);
+    },
+    ...options,
+  });
+};
+
+const useBulkDestroyPosts = (options = {}) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ids => bulkDestroyPosts(ids),
+    onSuccess: async (...args) => {
+      await queryClient.invalidateQueries([QUERY_KEYS.POSTS]);
+      await queryClient.invalidateQueries([QUERY_KEYS.MY_POSTS]);
+      await queryClient.invalidateQueries([QUERY_KEYS.POST]);
+      options.onSuccess?.(...args);
+    },
+    ...options,
+  });
+};
+
 export {
   useCreatePost,
+  useBulkDestroyPosts,
+  useBulkUpdatePosts,
   useDestroyPost,
   useFetchMyPosts,
   useFetchPost,
