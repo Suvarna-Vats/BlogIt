@@ -16,7 +16,7 @@ const setAuthHeaders = () => {
       .getAttribute("content"),
   };
   const token = getFromLocalStorage("authToken");
-  const email = getFromLocalStorage("authEmail");
+  const email = getFromLocalStorage("email");
   if (token && email) {
     axios.defaults.headers["X-Auth-Email"] = email;
     axios.defaults.headers["X-Auth-Token"] = token;

@@ -1,6 +1,6 @@
 import { getFromLocalStorage } from "./storage";
 
-const getLoggedInUserEmail = () => getFromLocalStorage("authEmail");
+const getLoggedInUserEmail = () => getFromLocalStorage("email");
 const getLoggedInUserId = () => getFromLocalStorage("userId");
 
 const isLoggedIn = () => {

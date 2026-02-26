@@ -2,7 +2,7 @@ import { createConsumer } from "@rails/actioncable";
 import { getFromLocalStorage } from "utils/storage";
 
 const buildCableUrl = () => {
-  const email = getFromLocalStorage("authEmail");
+  const email = getFromLocalStorage("email");
   const token = getFromLocalStorage("authToken");
   const params = new URLSearchParams();
   if (email) params.set("email", email);
