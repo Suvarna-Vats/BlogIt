@@ -68,7 +68,7 @@ gem "connection_pool", "~> 2.4"
 gem "pundit"
 gem "react-rails", "~> 2.7.1"
 gem "redis"
-gem "sidekiq", "~> 7.0"
+gem "sidekiq", "~> 8.0"
 gem "solargraph", group: :development
 gem "sprockets"
 gem "sprockets-rails"
